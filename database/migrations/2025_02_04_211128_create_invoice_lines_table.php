@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('unit_price');
             $table->integer('total_price');
-            $table->foreignId('invoice_id')->constrained('invoices');
+            $table->foreignUuid('invoice_id')->constrained('invoices');
             $table->timestamps();
         });
     }
