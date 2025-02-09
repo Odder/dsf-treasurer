@@ -62,14 +62,13 @@
                     <div class="text-sm text-white-900 dark:text-white-200">{{ $invoice->amount }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-
                     <div class="text-sm text-white-900 dark:text-white-200">{{ \Carbon\Carbon::parse($invoice->due_at)->format('d/m/Y') }}</div>
                 </td>
             </tr>
         @empty
             <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-center" colspan="6">
-                    <div class="text-sm text-white-500">No invoices found.</div>
+                    <div class="text-sm text-white-500">Ingen fakturaer fundet.</div>
                 </td>
             </tr>
         @endforelse
