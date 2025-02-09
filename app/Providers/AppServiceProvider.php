@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Observers\InvoiceObserver;
 use App\Services\Wca\Competitions;
 use App\Services\Wca\WcaServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         Invoice::observe(InvoiceObserver::class);
 
         $this->app->register(WcaServiceProvider::class);
