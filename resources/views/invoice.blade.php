@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>Faktura for {{ $invoice->competition->name }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
 
+            .invoice-container {
+                box-shadow: none !important;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900 antialiased font-sans leading-relaxed">
 @php
@@ -25,11 +35,11 @@
 @endphp
 
     <!-- Status Banner -->
-<div class="{{ $statusClasses[$status] }} py-3 text-center font-semibold">
+<div class="{{ $statusClasses[$status] }} py-3 text-center font-semibold no-print">
     {{ $statusText[$status] }}
 </div>
 
-<div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-xl shadow-xl mt-4">
+<div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-xl shadow-xl mt-4 invoice-container">
 
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-gray-200 pb-6 mb-6">
@@ -131,7 +141,7 @@
 <!-- Mark as Paid Button (Conditional) -->
 @if($invoice->status === 'unpaid')
     @can('markAsPaid', $invoice)
-        <div class="mb-4 mt-10 text-center">
+        <div class="mb-4 mt-10 text-center no-print">
             <form action="{{ route('invoices.markAsPaid', $invoice) }}" method="POST" onsubmit="return confirm('Are you sure you want to mark this invoice as paid?');">
                 @csrf
                 @method('PATCH')
