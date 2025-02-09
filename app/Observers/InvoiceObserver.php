@@ -9,7 +9,7 @@ class InvoiceObserver
     public function creating(Invoice $invoice): void
     {
         // get max invoice number
-        $invoice->invoice_number = Invoice::max('invoice_number') + 1;
+        // $invoice->invoice_number = Invoice::max('invoice_number') + 1;
     }
 
     /**

@@ -2,7 +2,10 @@
 
 namespace App\Services\Wca;
 
+use App\Models\RegionalAssociation;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class Wcif
 {
@@ -15,7 +18,24 @@ class Wcif
 
     public static function fromId($id)
     {
-        return new static(Http::wca()->get("competitions/{$id}/wcif/public")->json());
+        try {
+            $response = Http::wca()->get("competitions/{$id}/wcif/public");
+
+            if ($response->successful()) {
+                return new static($response->json());
+            } else {
+                Log::error('WCA API Error: ' . $response->status() . ' - ' . $response->body(), [
+                    'url' => "competitions/{$id}/wcif/public",
+                ]);
+                return null; // Or throw an exception
+            }
+        } catch (Exception $e) {
+            Log::error('WCA API Exception: ' . $e->getMessage(), [
+                'url' => "competitions/{$id}/wcif/public",
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return null; // Or throw an exception
+        }
     }
 
     public function getCompetitors()
@@ -29,5 +49,81 @@ class Wcif
                 'registration' => $person['registration'],
             ]);
         });
+    }
+
+    public function getRegionalAssociation()
+    {
+        $extensions = collect($this->raw['extensions']);
+        try {
+            $associationExtension = $extensions->firstWhere('id', 'dsfAssociationInfo');
+            return $associationExtension['data']['billingAssociation'];
+        }
+        catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function addRegionalAssociation(RegionalAssociation $association)
+    {
+        $extension = [
+            'id' => 'dsfAssociationInfo',
+            'specUrl' => 'https://tools.danskspeedcubingforening.dk/foreninger',
+            'data' => [
+                'organisingAssociation' => $association->wcif_identifier,
+                'billingAssociation' => $association->wcif_identifier,
+            ],
+        ];
+
+        // $extensions
+        $extensions = collect($this->raw['extensions']);
+        $index = $extensions->search(
+            fn ($extension) => $extension['id'] === 'dsfAssociationInfo'
+        );
+
+        if ($index === false) {
+            $extensions->push($extension);
+        }
+        else {
+            $extensions->put($index, $extension);
+        }
+
+        try {
+            $response = Http::wca()
+                ->withHeaders([
+                    'Authorization' => 'bearer '.config('app.wca_api_key'),
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ])
+                ->patch("competitions/{$this->raw['id']}/wcif", ['extensions' => $extensions]);
+
+            if ($response->successful()) {
+                return $response->json();
+            } else {
+                Log::error('WCA API Error: ' . $response->status() . ' - ' . $response->body(), [
+                    'url' => "competitions/{$this->raw['id']}/wcif",
+                    'method' => 'PATCH',
+                    'headers' => [
+                        'Authorization' => 'bearer '.config('app.wca_api_key'),
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
+                    'body' => ['extensions' => $extensions],
+                ]);
+                return null;
+            }
+        } catch (Exception $e) {
+            Log::error('WCA API Exception: ' . $e->getMessage(), [
+                'url' => "competitions/{$this->raw['id']}/wcif",
+                'method' => 'PATCH',
+                'headers' => [
+                    'Authorization' => 'bearer '.config('app.wca_api_key'),
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ],
+                'body' => ['extensions' => $extensions],
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return null;
+        }
     }
 }

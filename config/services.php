@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'wca' => [
+        'client_id' => env('WCA_CLIENT_ID'),
+        'client_secret' => env('WCA_CLIENT_SECRET'),
+        'redirect' => env('WCA_REDIRECT_URI'),
+    ],
+
 ];

@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('competitions', function (Blueprint $table) {
+        Schema::create('invoice_lines', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('wca_id');
-            $table->string('name');
-            $table->integer('number_of_competitors');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->enum('status', ['past', 'current', 'future'])->default('future');
+            $table->string('description');
+            $table->integer('quantity');
+            $table->integer('unit_price');
+            $table->integer('total_price');
+            $table->foreignId('invoice_id')->constrained('invoices');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('competitions');
+        Schema::dropIfExists('invoice_lines');
     }
 };

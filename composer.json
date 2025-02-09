@@ -7,7 +7,9 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.9",
+        "laravel/socialite": "^5.17",
         "laravel/tinker": "^2.9",
+        "spatie/laravel-discord-alerts": "^1.6",
         "spatie/laravel-pdf": "^1.5"
     },
     "require-dev": {

@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Invoice extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'invoice_number',
@@ -18,11 +22,18 @@ class Invoice extends Model
         'status',
         'recipient_id',
         'competition_id',
+        'association_id',
+        'due_at',
         'sent_at',
     ];
     protected $casts = [
         'sent_at' => 'datetime',
     ];
+
+    public function getAmountAttribute()
+    {
+        return $this->lines()->sum('total_price');
+    }
 
     public function recipient(): BelongsTo
     {
@@ -32,5 +43,51 @@ class Invoice extends Model
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
+    }
+
+    public function association(): BelongsTo
+    {
+        return $this->belongsTo(RegionalAssociation::class, 'association_id');
+    }
+
+    public function lines(): HasMany
+    {
+        return $this->hasMany(InvoiceLine::class);
+    }
+
+    public function stamp(): Invoice
+    {
+        $this->update([
+            'invoice_number' => (Invoice::max('invoice_number') ?? 0) + 1,
+            'sent_at' => now(),
+            'status' => 'unpaid',
+        ]);
+
+        return $this;
+    }
+
+    public function scopeByYear($query, $year)
+    {
+        return $query->whereHas('competition', function ($q) use ($year) {
+            $q->whereYear('end_date', $year);
+        });
+    }
+
+    public function scopeForCurrentUser(Builder $query)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return $query->where('id', null); // Or throw an exception, or return an empty query
+        }
+
+        $regionalAssociationIds = ContactInfo::where('wca_id', $user->wca_id)->get()->map(function ($contact) {
+            return [
+                ...$contact->chairmanAssociations()->pluck('id'),
+                ...$contact->treasurerAssociations()->pluck('id'),
+            ];
+        })->flatten()->unique()->toArray();
+
+        return $query->whereIn('association_id', $regionalAssociationIds);
+
     }
 }

@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->id();
-            $table->integer('invoice_number');
+            $table->uuid('id')->primary();
+            $table->integer('invoice_number')->nullable();
             $table->integer('participants');
             $table->integer('non_paying_participants');
             $table->integer('amount')->default(0);
             $table->enum('status', ['paid', 'unpaid', 'draft'])->default('draft');
-            $table->foreignId('recipient_id')->nullable();
-            $table->foreignId('competition_id')->nullable();
+            $table->foreignUuid('recipient_id')->nullable();
+            $table->foreignUuid('competition_id')->nullable();
+            $table->foreignUuid('association_id')->nullable();
+            $table->dateTime('due_at')->nullable();
             $table->dateTime('sent_at')->nullable();
             $table->timestamps();
         });

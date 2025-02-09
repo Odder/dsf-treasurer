@@ -28,8 +28,9 @@ class FetchCompetitions implements ShouldQueue
     public function handle(): void
     {
         $wca = new Competitions();
-
-        foreach($wca->list() as $competition) {
+        $year = 2024;
+        $competitions = $wca->list(since: "{$year}-01-01", before: "{$year}-12-31");
+        foreach(array_reverse($competitions) as $competition) {
             echo $competition['name'] . PHP_EOL;
             if (!Competition::where('wca_id', $competition['id'])->exists()) {
                 Competition::create([
