@@ -6,8 +6,12 @@ use App\Models\Invoice;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/invoices');
 });
+
+Route::get('/login', function () {
+    return view('splash');
+})->name('splash');
 
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show');

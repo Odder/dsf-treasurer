@@ -13,7 +13,7 @@ class InvoiceController extends Controller
     public function index()
     {
         if (!Auth::check()) {
-            return redirect('/auth/wca/redirect');
+            return redirect('/login');
         }
 
         if (Gate::allows('viewAny', Invoice::class)) {
@@ -28,7 +28,7 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         if (!Auth::check()) {
-            return redirect('/auth/wca/redirect');
+            return redirect('/login');
         }
 
         if (! Gate::allows('view', $invoice)) {
