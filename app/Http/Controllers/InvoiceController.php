@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Livewire;
 
 class InvoiceController extends Controller
 {
@@ -16,13 +17,11 @@ class InvoiceController extends Controller
             return redirect('/login');
         }
 
-        if (Gate::allows('viewAny', Invoice::class)) {
-            $invoices = Invoice::with('association')->get();
-        } else {
-            $invoices = Invoice::forCurrentUser()->with('association')->get();
-        }
+        $invoiceTableHtml = Livewire::mount('invoice-table');
 
-        return view('invoices', compact('invoices'));
+        return view('invoices', [
+            'invoiceTableHtml' => $invoiceTableHtml,
+        ]);
     }
 
     public function show(Invoice $invoice)
@@ -34,6 +33,7 @@ class InvoiceController extends Controller
         if (! Gate::allows('view', $invoice)) {
             abort(403, 'Unauthorized. You are not authorized to view this invoice.');
         }
+
         return view('invoice', ['invoice' => $invoice]);
     }
 
