@@ -63,6 +63,18 @@ class Wcif
         }
     }
 
+    public function getOrganisingRegionalAssociation()
+    {
+        $extensions = collect($this->raw['extensions']);
+        try {
+            $associationExtension = $extensions->firstWhere('id', 'dsfAssociationInfo');
+            return $associationExtension['data']['organisingAssociation'];
+        }
+        catch (\Exception $e) {
+            return null;
+        }
+    }
+
     public function addRegionalAssociation(RegionalAssociation $association)
     {
         $extension = [

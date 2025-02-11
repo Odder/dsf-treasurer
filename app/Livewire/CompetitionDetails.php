@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Jobs\UpdateCompetitionWcif;
 use App\Models\Competition;
 use App\Services\Wca\Wcif;
 use Livewire\Component;
@@ -12,33 +13,11 @@ class CompetitionDetails extends Component
     public $wcif;
     public $competitors;
     public $events;
+    public $updatingWcif = false;
 
     public function mount(Competition $competition)
     {
         $this->competition = $competition;
-        // $this->loadWcifData();
-    }
-
-    public function loadWcifData()
-    {
-        $this->wcif = Wcif::fromId($this->competition->wca_id);
-
-        if (!$this->wcif) {
-            $this->addError('wcif', 'WCIF data not found for this competition.');
-            return;
-        }
-
-        $this->competitors = collect($this->wcif->raw['persons'])->map(function ($person) {
-            return collect([
-                'name' => $person['name'],
-                'wcaId' => $person['wcaId'],
-                'roles' => $person['roles'],
-                'country' => $person['countryIso2'],
-                'registration' => $person['registration'],
-            ]);
-        });
-
-        $this->events = collect($this->wcif->raw['events'])->pluck('id')->toArray();
     }
 
     public function render()
@@ -53,7 +32,10 @@ class CompetitionDetails extends Component
 
     public function refetchWcif()
     {
-        $this->loadWcifData();
+        $this->updatingWcif = false;
+        UpdateCompetitionWcif::dispatchSync($this->competition);
+        session()->flash('message', 'WCIF data successfully updated.');
+        $this->updatingWcif = false;
     }
 
     public function generateInvoice()

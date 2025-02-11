@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Wca\Wcif;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,14 @@ class Competition extends Model
         'number_of_competitors',
         'start_date',
         'end_date',
+        'wcif',
+        'participants',
     ];
+
+    public function getWcifAttribute()
+    {
+        return new Wcif($this->attributes['wcif']);
+    }
 
     public function invoices(): HasMany
     {

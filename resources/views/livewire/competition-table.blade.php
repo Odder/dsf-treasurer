@@ -1,7 +1,12 @@
 @php
     use Carbon\Carbon;
 @endphp
-<div>
+
+<x-slot name="header">
+    Konkurrence-oversigt
+</x-slot>
+
+<x-main-container>
     <x-bladewind::table
         layout="custom"
         divided="thin"
@@ -50,4 +55,4 @@
     <div class="px-4 py-3 bg-white dark:bg-gray-800 border-t border-gray-500 ">
         {{ $competitions->links() }}
     </div>
-</div>
+</x-main-container>

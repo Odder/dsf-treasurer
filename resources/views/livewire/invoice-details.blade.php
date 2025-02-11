@@ -1,23 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faktura for {{ $invoice->competition->name }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-
-            .invoice-container {
-                box-shadow: none !important;
-            }
-        }
-    </style>
-</head>
-<body class="bg-gray-100 text-gray-900 antialiased font-sans leading-relaxed">
 @php
     $statusClasses = [
         'paid' => 'bg-green-100 text-green-800',
@@ -34,6 +14,9 @@
     $status = $invoice->status ?? 'draft'; // Default to 'draft' if status is not set
 @endphp
 <div>
+    <x-slot name="header">
+        Faktura for {{ $invoice->competition->name }}
+    </x-slot>
         <!-- Status Banner -->
     <div class="{{ $statusClasses[$status] }} py-3 text-center font-semibold no-print">
         {{ $statusText[$status] }}

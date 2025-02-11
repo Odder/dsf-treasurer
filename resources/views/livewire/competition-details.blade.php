@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     <x-slot name="header">
         {{ $competition->name }}
     </x-slot>
@@ -9,6 +9,12 @@
             <span class="block sm:inline">{{ session('message') }}</span>
         </div>
     @endif
+
+    <x-action-container>
+        <x-bladewind::button icon="arrow-path" wire:click="refetchWcif" wire:updatingWcif.attr="disabled">
+            Refetch WCIF
+        </x-bladewind::button>
+    </x-action-container>
 
     <x-two-column-container>
         <x-slot name="left">
@@ -34,10 +40,6 @@
                         Generate Invoice
                     </button>
                 @endif
-
-                <button wire:click="refetchWcif" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Refetch WCIF
-                </button>
                 @error('wcif') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </x-slot>
@@ -84,4 +86,4 @@
         </div>
 
     </x-main-container>
-</x-app-layout>
+</div>

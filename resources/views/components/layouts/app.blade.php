@@ -17,6 +17,18 @@
     <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .invoice-container {
+                box-shadow: none !important;
+            }
+        }
+    </style>
 </head>
 <body class="font-sans antialiased dark:bg-dark700">
 <div class="min-h-screen bg-gray-100 dark:bg-dark700" style="background-color: #1f2937;">
@@ -59,7 +71,7 @@
         <div class="flex-1 flex flex-col md:pl-64">
             <div class = "flex flex-col flex-1 bg-gray-100 dark:bg-gray-700">
                 <!-- Page Heading -->
-                <header class="bg-white dark:bg-blue-800 shadow dark:text-gray-300">
+                <header class="bg-white dark:bg-blue-800 shadow dark:text-gray-300 no-print">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-300 leading-tight">
                             {{ $header }}
@@ -68,14 +80,12 @@
                 </header>
 
                 <!-- Page Content -->
-                <main class="flex-1 py-12">
+                <main class="flex-1 py-0">
                     {{ $slot }}
                 </main>
             </div>
         </div>
     </div>
 </div>
-
-@livewireScripts
 </body>
 </html>

@@ -11,32 +11,6 @@ use Livewire\Livewire;
 
 class InvoiceController extends Controller
 {
-    public function index()
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        $invoiceTableHtml = Livewire::mount('invoice-table');
-
-        return view('invoices', [
-            'invoiceTableHtml' => $invoiceTableHtml,
-        ]);
-    }
-
-    public function show(Invoice $invoice)
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        if (! Gate::allows('view', $invoice)) {
-            abort(403, 'Unauthorized. You are not authorized to view this invoice.');
-        }
-
-        return view('invoice', ['invoice' => $invoice]);
-    }
-
     public function markAsPaid(Request $request, Invoice $invoice)
     {
         if (! Gate::allows('markAsPaid', $invoice)) {
