@@ -11,8 +11,22 @@
     @endif
 
     <x-action-container>
-        <x-bladewind::button icon="arrow-path" wire:click="refetchWcif" wire:updatingWcif.attr="disabled">
-            Refetch WCIF
+        <div wire:loading wire:target="refetchWcif">
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
+        <x-bladewind::button
+            icon="arrow-path"
+            class="relative"
+            wire:click="refetchWcif"
+            wire:loading.remove
+            wire:target="refetchWcif"
+        >
+            <span>Genhent WCIF</span>
         </x-bladewind::button>
     </x-action-container>
 
@@ -22,22 +36,26 @@
                 <h4 class="text-md font-semibold mb-2">Detaljer</h4>
                 <p>Konkurrence:
                     <a href="https://www.worldcubeassociation.org/competitions/{{ $competition->wca_id }}">
-                    {{ $competition->name }}
+                        {{ $competition->name }}
                     </a>
                 </p>
                 <p>WCA ID: {{ $competition->wca_id }}</p>
-                <p>Start Date: {{ $competition->start_date }}</p>
-                <p>End Date: {{ $competition->end_date }}</p>
+                <p>Startdato: {{ $competition->start_date }}</p>
+                <p>Slutdato: {{ $competition->end_date }}</p>
                 @if ($competition->invoices()->exists())
-                    <p>Invoice:
+                    <p>Faktura:
                         <a href="{{ route('invoices.show', $competition->invoices()->first()) }}"
-                           class="text-blue-600 hover:underline">View Invoice
+                           class="text-blue-600 hover:underline"
+                           wire:navigate.hover
+                        >
+                            Se Faktura
                             #{{ $competition->invoices()->first()->invoice_number }}</a>
                     </p>
                 @else
-                    <p class="text-gray-500">No invoice generated for this competition yet.</p>
-                    <button wire:click="generateInvoice" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Generate Invoice
+                    <p class="text-gray-500">Der er ikke nogen faktura endnu.</p>
+                    <button wire:click="generateInvoice"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Generér faktura
                     </button>
                 @endif
                 @error('wcif') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -45,14 +63,16 @@
         </x-slot>
         <x-slot name="right">
             <div class="p-4">
-                <h4 class="text-md font-semibold">Events Schedule</h4>
+                <h4 class="text-md font-semibold mb-2">Discipliner</h4>
                 <ul>
                     @if($events)
-                        @foreach($events as $event)
-                            <li>{{ $event }}</li>
-                        @endforeach
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                            @foreach($events as $event)
+                                <li>{{ $event }}</li>
+                            @endforeach
+                        </ul>
                     @else
-                        <li>No Events Found</li>
+                        <li>Ingen discipliner fundet</li>
                     @endif
                 </ul>
             </div>
@@ -62,28 +82,27 @@
     <!-- Registered Competitors Card -->
     <x-main-container>
         <div class="p-4">
-            <h4 class="text-md font-semibold">Registered Competitors</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                @if($competitors)
-                    @foreach($competitors->take(6) as $competitor)
-                        <div class="text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-gray-400" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5.121 17.804A13 13 0 0110 16.25a13 13 0 013.879 1.554m-.999-3.467l-1.105-2.905a1 1 0 00-.948-.684H6.353a1 1 0 00-.948.684l-1.105 2.905a13 13 0 01.999 3.467m7.328 0l-1.105 2.905a1 1 0 00.948.684h4.076a1 1 0 00.948-.684l-1.105-2.905m-4.66-3.467a3.3 3.3 0 01-3.3 3.3H5A3.3 3.3 0 011.7 11a3.3 3.3 0 013.3-3.3h1.685a3.3 3.3 0 013.3 3.3z"/>
-                            </svg>
-                            <p class="text-sm text-gray-500">{{ $competitor->name }}</p>
-                            <p class="text-xs text-gray-400">WCA ID: {{ $competitor->wcaId }}</p>
-                        </div>
-                    @endforeach
-                @else
-                    <div>No Competitors Found</div>
-                @endif
-            </div>
-            <div class="mt-4 text-center">
-                <a href="#" class="text-blue-600 hover:underline">View All Competitors</a>
+            <h4 class="text-md font-semibold mb-4">Arrangører</h4>
+
+            <!-- All Competitors Table -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                @forelse($organisers as $organiser)
+                    <div class="text-center">
+                        @if($organiser->get('avatarUrl'))
+                            <img src="{{ $organiser->get('avatarUrl') }}" alt="{{ $organiser->get('name') }}"
+                                 class="rounded-full h-16 w-16 mx-auto object-cover">
+                        @else
+                            <div class="rounded-full h-16 w-16 mx-auto bg-gray-300"></div>
+                        @endif
+                        <a href="https://www.worldcubeassociation.org/persons/{{ $organiser->get('wcaId') }}"
+                           target="_blank" class="text-sm text-gray-500 hover:text-blue-600">
+                            {{ $organiser->get('name') }}
+                        </a>
+                    </div>
+                @empty
+                    <div>Ingen arrangører fundet</div>
+                @endforelse
             </div>
         </div>
-
     </x-main-container>
 </div>

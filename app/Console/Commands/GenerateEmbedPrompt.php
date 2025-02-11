@@ -33,7 +33,7 @@ class GenerateEmbedPrompt extends Command
         all aspects of PHP and the Laravel framework. You are also very experienced with debugging, refactoring and
         improving code. You are also very good at helping with new features.
         You have access to the following files and their contents:\n\n';
-        $basePath = base_path(); // Get the root path of the application
+        $basePath = base_path();
 
         $directories = [
             'app',
@@ -52,7 +52,10 @@ class GenerateEmbedPrompt extends Command
                 foreach ($files as $file) {
                     $filePath = $file->getPathname();
 
-                    // Calculate the relative path from the project root
+                    if (str_ends_with($filePath, '.sqlite')) {
+                        continue;
+                    }
+
                     $relativePath = str_replace($basePath . '/', '', $filePath);
 
                     $output .= "// {$relativePath}\n";

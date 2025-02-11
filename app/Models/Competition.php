@@ -22,9 +22,9 @@ class Competition extends Model
         'participants',
     ];
 
-    public function getWcifAttribute()
+    public function getWcifAttribute(): Wcif
     {
-        return new Wcif($this->attributes['wcif']);
+        return new Wcif(json_decode($this->attributes['wcif'], true));
     }
 
     public function invoices(): HasMany
