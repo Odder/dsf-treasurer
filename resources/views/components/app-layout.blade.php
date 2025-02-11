@@ -29,13 +29,13 @@
                 </div>
                 <div class="space-y-2">
                     <div>
-                        <a href="/invoices" wire:navigate wire:prefetch @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('invoices') ? 'bg-gray-700' : ''])>
+                        <a href="/invoices" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('invoices') ? 'bg-gray-700' : ''])>
                             Fakturaer
                         </a>
                     </div>
 
                     <div>
-                        <a href="/competitions" wire:navigate wire:prefetch @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('competitions*') ? 'bg-gray-700' : ''])>
+                        <a href="/competitions" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('competitions*') ? 'bg-gray-700' : ''])>
                             Konkurrencer
                         </a>
                     </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="space-y-2">
                         <div>
-                            <a href="/login" wire:navigate wire:prefetch @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('login') ? 'bg-gray-700' : ''])>
+                            <a href="/login" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('login') ? 'bg-gray-700' : ''])>
                                 Login
                             </a>
                         </div>
@@ -75,6 +75,7 @@
         </div>
     </div>
 </div>
+
 @livewireScripts
 </body>
 </html>
