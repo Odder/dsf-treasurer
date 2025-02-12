@@ -18,7 +18,6 @@ class InvoicePolicy
         $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
 
         if ($dsfAssociation) {
-            $contactInfo = ContactInfo::where('wca_id', $user->wca_id)->first();
             if ($dsfAssociation->treasurer->wca_id == $user->wca_id || $dsfAssociation->chairman->id == $user->wca_id) {
                 return true;
             }
@@ -31,30 +30,7 @@ class InvoicePolicy
      */
     public function view(User $user, Invoice $invoice): bool
     {
-        // Check if the user is associated with DSF
-        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
-
-        if ($dsfAssociation) {
-            if ($dsfAssociation->treasurer->wca_id == $user->wca_id || $dsfAssociation->chairman->id == $user->wca_id) {
-                return true;
-            }
-        }
-
-        // Get the contact info record associated with the user's wca_id
-        $contactInfo = ContactInfo::where('wca_id', $user->wca_id)->first();
-
-        if (!$contactInfo) {
-            return false;
-        }
-
-        // Get the regional association IDs where the user is a chairman or treasurer
-        $regionalAssociationIds = collect([
-            ...$contactInfo->chairmanAssociations()->pluck('id')->toArray(),
-            ...$contactInfo->treasurerAssociations()->pluck('id')->toArray(),
-        ])->unique()->toArray();
-
-        // Check if the invoice's association ID is in the allowed IDs
-        return in_array($invoice->association_id, $regionalAssociationIds);
+        return $invoice->scopeForCurrentUser(Invoice::query())->where('id', $invoice->id)->exists();
     }
 
     /**

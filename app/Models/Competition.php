@@ -20,6 +20,7 @@ class Competition extends Model
         'end_date',
         'wcif',
         'participants',
+        'regional_association_id',
     ];
 
     public function getWcifAttribute(): Wcif

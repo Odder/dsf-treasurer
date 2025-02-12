@@ -29,7 +29,11 @@
                 </td>
 
                 <td>
-                    <div>{{ $competition->invoices->first()?->association?->name }}</div>
+                    @if($competition->invoices->first())
+                        <a href="/regional-associations/{{ $competition->invoices->first()->association->id }}" wire:navigate.hover>
+                            <div>{{ $competition->invoices->first()->association->name }}</div>
+                        </a>
+                    @endif
                 </td>
                 <td>
                     <div>{{ $competition->invoices->first()?->participants }}</div>

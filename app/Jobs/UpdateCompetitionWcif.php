@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Competition;
+use App\Models\RegionalAssociation;
 use App\Services\Wca\Wcif;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -28,6 +29,10 @@ class UpdateCompetitionWcif implements ShouldQueue
     public function handle(): void
     {
         $wcif = Wcif::fromId($this->competition->wca_id);
-        $this->competition->update(['wcif' => $wcif->raw]);
+        $regionalAssociation = RegionalAssociation::where('wcif_identifier', '=', $wcif->getRegionalAssociation())->first();
+        $this->competition->update([
+            'wcif' => $wcif->raw,
+            'regional_association_id' => $regionalAssociation?->id,
+        ]);
     }
 }

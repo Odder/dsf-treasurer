@@ -48,9 +48,12 @@ class GenerateInvoice implements ShouldQueue
                     return;
                 }
                 $regionalAssociation = RegionalAssociation::where('wcif_identifier', '=', $wcif->getRegionalAssociation())->first();
+                $participants = $wcif->getCompetitors()->count();
+                $nonPayingParticipants = $wcif->getCompetitors()->filter(fn($c) => $c['roles'] && in_array('organizer', $c['roles']))->count();
                 $invoice = $this->competition->invoices()->create([
-                    'participants' => $wcif->getCompetitors()->count(),
-                    'non_paying_participants' => $wcif->getCompetitors()->filter(fn($c) => $c['roles'] && in_array('organizer', $c['roles']))->count(),
+                    'participants' => $participants,
+                    'amount' => 25 * ($participants- $nonPayingParticipants),
+                    'non_paying_participants' => $nonPayingParticipants,
                     'association_id' => $regionalAssociation?->id,
                 ]);
 
@@ -59,13 +62,13 @@ class GenerateInvoice implements ShouldQueue
                         'description' => "Kontigent for deltagere til {$competitionName}",
                         'quantity' => $invoice->participants,
                         'unit_price' => 25,
-                        'total_price' => 25 * $invoice->participants,
+                        'total_price' => 25 * $participants,
                     ],
                     [
                         'description' => "Deltagere fritaget for kontigent",
                         'quantity' => $invoice->non_paying_participants,
                         'unit_price' => -25,
-                        'total_price' => -25 * $invoice->non_paying_participants,
+                        'total_price' => -25 * $nonPayingParticipants,
                     ],
                 ]);
                 DiscordAlert::message("✅ Invoice generated for: **{$competitionName}** (Invoice Number: {$invoice->invoice_number})");

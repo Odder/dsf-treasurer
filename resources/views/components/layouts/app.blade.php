@@ -52,6 +52,18 @@
                         </a>
                     </div>
                 </div>
+
+                <div class="mb-2 mt-4">  <!-- Added mt-4 for spacing -->
+                    <p class="text-center text-sm text-gray-400 mt-2">Foreninger</p>
+                </div>
+                <div class="space-y-2">
+                    <div>
+                        <a href="/regional-associations" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('regional-associations*') ? 'bg-gray-700' : ''])>
+                            Regionale Foreninger
+                        </a>
+                    </div>
+                    <!-- Add other "Foreninger" links here if needed -->
+                </div>
                 @else
                     <div class="mb-2">
                         <p class="text-center text-sm text-gray-400 mt-2">Bruger</p>

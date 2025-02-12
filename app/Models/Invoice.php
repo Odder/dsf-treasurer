@@ -30,11 +30,6 @@ class Invoice extends Model
         'sent_at' => 'datetime',
     ];
 
-    public function getAmountAttribute()
-    {
-        return $this->lines()->sum('total_price');
-    }
-
     public function recipient(): BelongsTo
     {
         return $this->belongsTo(ContactInfo::class);
@@ -87,7 +82,11 @@ class Invoice extends Model
             ];
         })->flatten()->unique()->toArray();
 
-        return $query->whereIn('association_id', $regionalAssociationIds);
+        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
+        if ($dsfAssociation && ($dsfAssociation->treasurer?->wca_id == $user->wca_id || $dsfAssociation->chairman?->wca_id == $user->wca_id)) {
+            return $query;
+        }
 
+        return $query->whereIn('association_id', $regionalAssociationIds);
     }
 }
