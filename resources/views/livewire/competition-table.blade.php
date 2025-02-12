@@ -29,7 +29,7 @@
                 </td>
 
                 <td>
-                    @if($competition->invoices->first())
+                    @if($competition->invoices->first()?->association)
                         <a href="/regional-associations/{{ $competition->invoices->first()->association->id }}" wire:navigate.hover>
                             <div>{{ $competition->invoices->first()->association->name }}</div>
                         </a>
@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     <a href="/invoices/{{ $competition->invoices->first()?->id }}" wire:navigate.hover>
-                        <div>{{ $competition->invoices->first()?->invoice_number }}</div>
+                        <div>#{{ $competition->invoices->first()?->invoice_number }}</div>
                     </a>
                 </td>
             </tr>
