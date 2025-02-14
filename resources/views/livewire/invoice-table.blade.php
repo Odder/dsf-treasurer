@@ -20,6 +20,7 @@
                 <th>Forening</th>
                 <th>Total</th>
                 <th>Forfaldsdato</th>
+                <th>Actions</th>
             </x-slot:header>
 
             <tbody>
@@ -69,6 +70,14 @@
                     <td>
                         <div>{{ Carbon::parse($invoice->due_at)->format('d/m/Y') }}</div>
                     </td>
+                    <td>
+                        <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
+                            <x-bladewind::button size="tiny">
+                                Vis faktura
+                            </x-bladewind::button>
+                        </a>
+                    </td>
+                </tr>
                 </tr>
             @empty
                 <tr>

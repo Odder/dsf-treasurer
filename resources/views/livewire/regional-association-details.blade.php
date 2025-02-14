@@ -36,6 +36,7 @@
                     <th>#</th>
                     <th>Konkurrence</th>
                     <th>Beløb</th>
+                    <th>Actions</th>
                 </x-slot>
                 @foreach($unpaidInvoices as $invoice)
                     <tr wire:key="{{ $invoice->id }}" class="dark:bg-gray-700">
@@ -50,6 +51,13 @@
                             </a>
                         </td>
                         <td class="text-right">{{ number_format($invoice->amount, 2) }}</td>
+                        <td>
+                            <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
+                                <x-bladewind::button size="tiny">
+                                    Vis faktura
+                                </x-bladewind::button>
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             </x-bladewind::table>
@@ -59,7 +67,7 @@
     @if ($paidInvoices->isNotEmpty())
         <x-main-container>
             <div class="p-4">
-                <h3 class="text-lg font-semibold">betalte fakturaer</h3>
+                <h3 class="text-lg font-semibold">Betalte fakturaer</h3>
             </div>
             <x-bladewind::table
                 layout="custom"
@@ -69,6 +77,7 @@
                     <th>#</th>
                     <th>Konkurrence</th>
                     <th>Beløb</th>
+                    <th>Actions</th>
                 </x-slot>
                 @foreach($paidInvoices as $invoice)
                     <tr wire:key="{{ $invoice->id }}" class="dark:bg-gray-700">
@@ -83,6 +92,13 @@
                             </a>
                         </td>
                         <td class="text-right">{{ number_format($invoice->amount, 2) }}</td>
+                        <td>
+                            <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
+                                <x-bladewind::button size="tiny">
+                                    Vis faktura
+                                </x-bladewind::button>
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             </x-bladewind::table>
