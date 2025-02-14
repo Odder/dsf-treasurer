@@ -24,7 +24,7 @@
                             {{ $association->name }}
                         </a>
                     </td>
-                    <td>{{ $association->numberOfCompetitions }}</td>
+                    <td>{{ $association->competitions?->count() }}</td>
                     <td>{{ $association->chairman?->name }}</td>
                     <td>{{ $association->treasurer?->name }}</td>
                 </tr>

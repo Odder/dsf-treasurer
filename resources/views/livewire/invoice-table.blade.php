@@ -27,7 +27,7 @@
                 <tr wire:key="{{ $invoice->id }}" class="dark:bg-gray-700">
                     <td>
                         <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
-                            {{ $invoice->invoice_number }}
+                            #{{ $invoice->invoice_number }}
                         </a>
                     </td>
 
@@ -52,13 +52,19 @@
                     </span>
                     </td>
                     <td>
-                        <div>{{ $invoice->competition?->name }}</div>
+                        <a href="/competitions/{{ $invoice->competition->id }}" wire:navigate.hover>
+                            {{ $invoice->competition->name }}
+                        </a>
                     </td>
                     <td>
-                        <div>{{ $invoice->association?->name }}</div>
+                        @if ($invoice->association)
+                            <a href="/regional-associations/{{ $invoice->association->id }}" wire:navigate.hover>
+                                {{ $invoice->association->name }}
+                            </a>
+                        @endif
                     </td>
                     <td>
-                        <div>{{ number_format($invoice->amount, 2, ',', '.') }}</div>
+                        <div class="text-right">{{ number_format($invoice->amount, 2, ',', '.') }}</div>
                     </td>
                     <td>
                         <div>{{ Carbon::parse($invoice->due_at)->format('d/m/Y') }}</div>

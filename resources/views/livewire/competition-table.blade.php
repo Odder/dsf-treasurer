@@ -16,7 +16,6 @@
             <th>Forening</th>
             <th>Deltagere</th>
             <th>Dato</th>
-            <th>Faktura</th>
         </x-slot:header>
 
         <tbody>
@@ -40,11 +39,6 @@
                 </td>
                 <td>
                     <div>{{ Carbon::parse($competition->start_date)->format('d/m/Y') }}</div>
-                </td>
-                <td>
-                    <a href="/invoices/{{ $competition->invoices->first()?->id }}" wire:navigate.hover>
-                        <div>#{{ $competition->invoices->first()?->invoice_number }}</div>
-                    </a>
                 </td>
             </tr>
         @empty

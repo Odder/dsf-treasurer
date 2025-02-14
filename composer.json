@@ -8,6 +8,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/socialite": "^5.17",
+        "laravel/telescope": "^5.5",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "mkocansey/bladewind": "^2.9",
