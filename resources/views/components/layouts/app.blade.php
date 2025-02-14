@@ -14,8 +14,8 @@
 
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
 
     <style>
@@ -33,44 +33,68 @@
 <body class="font-sans antialiased dark:bg-dark700">
 <div class="min-h-screen bg-gray-100 dark:bg-dark700" style="background-color: #1f2937;">
     <div class="flex h-screen">
-        <aside class="fixed top-0 hidden md:flex md:w-64 bg-gray-800 text-white  dark:text-gray-300 py-6 px-3 flex-shrink-0 flex flex-col h-screen">  <!-- Added fixed and top-0 -->
+        <aside
+            class="fixed top-0 hidden md:flex md:w-64 bg-gray-800 text-white  dark:text-gray-300 py-6 px-3 flex-shrink-0 flex flex-col h-screen">
+            <!-- Added fixed and top-0 -->
             <nav class="flex-1">
                 @auth
-                <div class="mb-2">
-                    <p class="text-center text-sm text-gray-400 mt-2">Afregning</p>
-                </div>
-                <div class="space-y-2">
-                    <div>
-                        <a href="/invoices" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('invoices') ? 'bg-gray-700' : ''])>
-                            Fakturaer
-                        </a>
+                    <div class="mb-2">
+                        <p class="text-center text-sm text-gray-400 mt-2">Afregning</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div>
+                            <a href="/invoices"
+                               wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('invoices') ? 'bg-gray-700' : ''])>
+                                Fakturaer
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="/competitions"
+                               wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('competitions*') ? 'bg-gray-700' : ''])>
+                                Konkurrencer
+                            </a>
+                        </div>
                     </div>
 
-                    <div>
-                        <a href="/competitions" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('competitions*') ? 'bg-gray-700' : ''])>
-                            Konkurrencer
-                        </a>
+                    <div class="mb-2 mt-4">  <!-- Added mt-4 for spacing -->
+                        <p class="text-center text-sm text-gray-400 mt-2">Foreninger</p>
                     </div>
-                </div>
+                    <div class="space-y-2">
+                        <div>
+                            <a href="/regional-associations"
+                               wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('regional-associations*') ? 'bg-gray-700' : ''])>
+                                Regionale Foreninger
+                            </a>
+                        </div>
+                        <!-- Add other "Foreninger" links here if needed -->
+                    </div>
 
-                <div class="mb-2 mt-4">  <!-- Added mt-4 for spacing -->
-                    <p class="text-center text-sm text-gray-400 mt-2">Foreninger</p>
-                </div>
-                <div class="space-y-2">
-                    <div>
-                        <a href="/regional-associations" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('regional-associations*') ? 'bg-gray-700' : ''])>
-                            Regionale Foreninger
-                        </a>
+                    <div class="mb-2 mt-4">  <!-- Added mt-4 for spacing -->
+                        <p class="text-center text-sm text-gray-400 mt-2">Udlæg</p>
                     </div>
-                    <!-- Add other "Foreninger" links here if needed -->
-                </div>
+                    <div class="space-y-2">
+                        <div>
+                            <a href="/receipts/upload"
+                               wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('receipts/upload') ? 'bg-gray-700' : ''])>
+                                Opret udlæg
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/me/receipts"
+                               wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('me/receipts') ? 'bg-gray-700' : ''])>
+                                Mine udlæg
+                            </a>
+                        </div>
+                    </div>
                 @else
                     <div class="mb-2">
                         <p class="text-center text-sm text-gray-400 mt-2">Bruger</p>
                     </div>
                     <div class="space-y-2">
                         <div>
-                            <a href="/login" wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('login') ? 'bg-gray-700' : ''])>
+                            <a href="/login"
+                               wire:navigate.hover @class(['block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white', request()->is('login') ? 'bg-gray-700' : ''])>
                                 Login
                             </a>
                         </div>
@@ -81,7 +105,7 @@
 
         <!-- Page Content Wrapper -->
         <div class="flex-1 flex flex-col md:pl-64">
-            <div class = "flex flex-col flex-1 bg-gray-100 dark:bg-gray-700">
+            <div class="flex flex-col flex-1 bg-gray-100 dark:bg-gray-700">
                 <!-- Page Heading -->
                 <header class="bg-white dark:bg-blue-800 shadow dark:text-gray-300 no-print">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">

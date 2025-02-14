@@ -7,8 +7,10 @@ use App\Livewire\CompetitionTable;
 use App\Livewire\InvoiceDetails;
 use App\Livewire\InvoiceTable;
 use App\Livewire\LoginScreen;
+use App\Livewire\MyReceipts;
 use App\Livewire\RegionalAssociationDetails;
 use App\Livewire\RegionalAssociationTable;
+use App\Livewire\UploadReceipt;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/regional-associations', RegionalAssociationTable::class)->name('regional-associations.index');
     Route::get('/regional-associations/{regionalAssociation}', RegionalAssociationDetails::class)->name('regional-associations.show');
+
+    Route::get('/receipts/upload', UploadReceipt::class)->name('receipts.upload');
+    Route::get('/me/receipts', MyReceipts::class)->name('receipts.mine');
 });
 
 Route::get('/auth/wca/redirect', [WcaAuthController::class, 'redirectToProvider']);
