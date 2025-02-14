@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 class FetchCompetitions implements ShouldQueue
 {
@@ -28,18 +30,30 @@ class FetchCompetitions implements ShouldQueue
     public function handle(): void
     {
         $wca = new Competitions();
-        $year = 2024;
+        $year = 2025;
         $competitions = $wca->list(since: "{$year}-01-01", before: "{$year}-12-31");
-        foreach(array_reverse($competitions) as $competition) {
-            echo $competition['name'] . PHP_EOL;
-            if (!Competition::where('wca_id', $competition['id'])->exists()) {
-                Competition::create([
-                    'wca_id' => $competition['id'],
-                    'name' => $competition['name'],
+
+        if (!$competitions) {
+            Log::error("Failed to fetch competitions from WCA API.");
+            DiscordAlert::message("❌ Failed to fetch competitions from WCA API.");
+            return;
+        }
+
+        foreach (array_reverse($competitions) as $competitionData) {
+            if (!Competition::where('wca_id', $competitionData['id'])->exists()) {
+                $competition = Competition::create([
+                    'wca_id' => $competitionData['id'],
+                    'name' => $competitionData['name'],
                     'number_of_competitors' => 0,
-                    'start_date' => $competition['start_date'],
-                    'end_date' => $competition['end_date'],
+                    'start_date' => $competitionData['start_date'],
+                    'end_date' => $competitionData['end_date'],
                 ]);
+
+                $message = "🎉 New competition found: **{$competition->name}** (WCA ID: {$competition->wca_id})";
+                DiscordAlert::message($message);
+                Log::info($message);
+            } else {
+                Log::info("Competition {$competitionData['name']} already exists.");
             }
         }
     }

@@ -49,7 +49,7 @@
                                 {{ $invoice->competition->name }}
                             </a>
                         </td>
-                        <td>{{ number_format($invoice->amount, 2) }}</td>
+                        <td class="text-right">{{ number_format($invoice->amount, 2) }}</td>
                     </tr>
                 @endforeach
             </x-bladewind::table>
@@ -74,11 +74,15 @@
                     <tr wire:key="{{ $invoice->id }}" class="dark:bg-gray-700">
                         <td>
                             <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
-                                {{ $invoice->invoice_number }}
+                                #{{ $invoice->invoice_number }}
                             </a>
                         </td>
-                        <td>{{ $invoice->competition?->name }}</td>
-                        <td>{{ number_format($invoice->amount, 2) }}</td>
+                        <td>
+                            <a href="/competitions/{{ $invoice->competition->id }}" wire:navigate.hover>
+                                {{ $invoice->competition->name }}
+                            </a>
+                        </td>
+                        <td class="text-right">{{ number_format($invoice->amount, 2) }}</td>
                     </tr>
                 @endforeach
             </x-bladewind::table>

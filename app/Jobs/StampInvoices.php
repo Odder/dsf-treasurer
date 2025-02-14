@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Spatie\DiscordAlerts\Facades\DiscordAlert;
 
 class StampInvoices implements ShouldQueue
 {
@@ -33,7 +34,7 @@ class StampInvoices implements ShouldQueue
      */
     public function handle()
     {
-        $date = Carbon::now()->subDays(3)->toDateString();
+        $date = Carbon::now()->subDays(10)->toDateString();
 
         $competitions = Competition::where('end_date', '<=', $date)->get();
 
@@ -43,7 +44,9 @@ class StampInvoices implements ShouldQueue
             foreach ($invoices as $invoice) {
                 try {
                     $invoice->stamp();
-                    Log::info("Stamped invoice {$invoice->id} for competition {$competition->name}");
+                    $message = "🧾 Invoice stamped for {$competition->name} (Invoice Number: {$invoice->invoice_number})";
+                    Log::info($message);
+                    DiscordAlert::message($message);
                 } catch (\Exception $e) {
                     Log::error("Failed to stamp invoice {$invoice->id} for competition {$competition->name}: " . $e->getMessage());
                 }
