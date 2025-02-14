@@ -28,6 +28,12 @@
         >
             <span>Genhent WCIF</span>
         </x-bladewind::button>
+        <a href="https://www.worldcubeassociation.org/competitions/{{ $competition->wca_id }}" target="_blank">
+            <x-bladewind::button>
+                <x-wca-logo class="mr-2 inline-block" width="25" height="25"/>
+                View on WCA
+            </x-bladewind::button>
+        </a>
     </x-action-container>
 
     <x-two-column-container>
