@@ -22,7 +22,7 @@ class CompetitionTable extends Component
         }
 
         return view('livewire.competition-table', [
-            'competitions' => Competition::paginate($this->perPage),
+            'competitions' => Competition::orderBy('start_date', 'desc')->paginate($this->perPage),
         ]);
     }
 }

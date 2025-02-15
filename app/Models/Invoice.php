@@ -55,6 +55,7 @@ class Invoice extends Model
         $this->update([
             'invoice_number' => (Invoice::max('invoice_number') ?? 0) + 1,
             'sent_at' => now(),
+            'due_at' => now()->addDays(30),
             'status' => 'unpaid',
         ]);
 
