@@ -1,11 +1,12 @@
 <div>
-    <x-slot name="header">
+    <x-slot:header>
         Velkommen!
-    </x-slot>
+    </x-slot:header>
 
-    <div>
-        <x-main-container>
-            <div class="p-10">
+    <x-mush.layout.container>
+        <div></div>
+        <x-mush.comp.card>
+            <div class="p-4">
                 <p class="mb-4">
                     For at se fakturaer relateret til Dansk Speedcubing Forening (DSF) skal du være logget ind.
                 </p>
@@ -16,6 +17,6 @@
                     </x-bladewind::button>
                 </a>
             </div>
-        </x-main-container>
-    </div>
+        </x-mush.comp.card>
+    </x-mush.layout.container>
 </div>

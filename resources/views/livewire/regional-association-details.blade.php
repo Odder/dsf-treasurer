@@ -1,132 +1,131 @@
 <div>
-    <x-slot name="header">
+    <x-slot:header>
         Forening: {{ $regionalAssociation->name }}
-    </x-slot>
+    </x-slot:header>
 
-    <x-action-container>
-        <a href="https://danskspeedcubingforening.dk/nyttig-info/">
-            <x-bladewind::button class="relative">
-                <span>Se forening på DSF</span>
-            </x-bladewind::button>
-        </a>
-    </x-action-container>
+    <x-mush.layout.container>
+        <x-action-container>
+            <a href="https://danskspeedcubingforening.dk/nyttig-info/">
+                <x-bladewind::button class="relative">
+                    <span>Se forening på DSF</span>
+                </x-bladewind::button>
+            </a>
+        </x-action-container>
 
-    <x-main-container>
-        <div class="p-4">
-            <h2 class="text-xl font-semibold mb-4">Detaljer</h2>
-            <p>Navn: {{ $regionalAssociation->name }}</p>
-            <p>Formand: {{ $regionalAssociation->chairman?->name ?? 'N/A' }}
-                ({{ $regionalAssociation->chairman?->email ?? 'N/A' }})</p>
-            <p>Kasserer: {{ $regionalAssociation->treasurer?->name ?? 'N/A' }}
-                ({{ $regionalAssociation->treasurer?->email ?? 'N/A' }})</p>
-            <p>Udestående: {{ number_format($regionalAssociation->currentOutstanding(), 2) }}</p>
-        </div>
-    </x-main-container>
-
-    @if ($unpaidInvoices->isNotEmpty())
-        <x-main-container>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold">Ubetalte fakturaer</h3>
+        <x-mush.comp.card title="Detaljer">
+            <div class="p-4 pt-0">
+                <p>Navn: {{ $regionalAssociation->name }}</p>
+                <p>Formand: {{ $regionalAssociation->chairman?->name ?? 'N/A' }}
+                    ({{ $regionalAssociation->chairman?->email ?? 'N/A' }})</p>
+                <p>Kasserer: {{ $regionalAssociation->treasurer?->name ?? 'N/A' }}
+                    ({{ $regionalAssociation->treasurer?->email ?? 'N/A' }})</p>
+                <p>Udestående: {{ number_format($regionalAssociation->currentOutstanding(), 2) }}</p>
             </div>
-            <x-bladewind::table
-                layout="custom"
-                divided="thin"
-            >
-                <x-slot name="header">
-                    <th>#</th>
-                    <th>Konkurrence</th>
-                    <th>Beløb</th>
-                    <th>Actions</th>
-                </x-slot>
-                @foreach($unpaidInvoices as $invoice)
-                    <tr wire:key="{{ $invoice->id }}" class="dark:bg-gray-700">
-                        <td>
-                            <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
-                                #{{ $invoice->invoice_number }}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/competitions/{{ $invoice->competition->id }}" wire:navigate.hover>
-                                {{ $invoice->competition->name }}
-                            </a>
-                        </td>
-                        <td class="text-right">{{ number_format($invoice->amount, 2) }}</td>
-                        <td>
-                            <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
-                                <x-bladewind::button size="tiny">
-                                    Vis faktura
-                                </x-bladewind::button>
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </x-bladewind::table>
-        </x-main-container>
-    @endif
+        </x-mush.comp.card>
 
-    @if ($paidInvoices->isNotEmpty())
-        <x-main-container>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold">Betalte fakturaer</h3>
-            </div>
-            <x-bladewind::table
-                layout="custom"
-                divided="thin"
-            >
-                <x-slot name="header">
-                    <th>#</th>
-                    <th>Konkurrence</th>
-                    <th>Beløb</th>
-                    <th>Actions</th>
-                </x-slot>
-                @foreach($paidInvoices as $invoice)
-                    <tr wire:key="{{ $invoice->id }}" class="dark:bg-gray-700">
-                        <td>
-                            <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
-                                #{{ $invoice->invoice_number }}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/competitions/{{ $invoice->competition->id }}" wire:navigate.hover>
-                                {{ $invoice->competition->name }}
-                            </a>
-                        </td>
-                        <td class="text-right">{{ number_format($invoice->amount, 2) }}</td>
-                        <td>
-                            <a href="/invoices/{{ $invoice->id }}" wire:navigate.hover>
-                                <x-bladewind::button size="tiny">
-                                    Vis faktura
-                                </x-bladewind::button>
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </x-bladewind::table>
-        </x-main-container>
-    @endif
+        @if ($unpaidInvoices->isNotEmpty())
+            <x-mush.comp.card title="Ubetalte fakturaer">
+                <x-mush.comp.table>
+                    <x-slot:header>
+                        <x-mush.comp.table-th>#</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
+                    </x-slot:header>
+                    <x-slot:body>
+                        @foreach($unpaidInvoices as $invoice)
+                            <x-mush.comp.table-tr wire:key="{{ $invoice->id }}">
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
+                                        #{{ $invoice->invoice_number }}
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->competition->id }}">
+                                        {{ $invoice->competition->name }}
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td class="text-right">
+                                    {{ number_format($invoice->amount, 2) }}
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
+                                        <x-bladewind::button size="tiny">
+                                            Vis faktura
+                                        </x-bladewind::button>
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                            </x-mush.comp.table-tr>
+                        @endforeach
+                    </x-slot:body>
+                </x-mush.comp.table>
+            </x-mush.comp.card>
+        @endif
 
-    @if ($upcomingCompetitions->isNotEmpty())
-        <x-main-container>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold">Kommende konkurrencer</h3>
-            </div>
-            <x-bladewind::table
-                layout="custom"
-                divided="thin"
-            >
-                <x-slot name="header">
-                    <th>Navn</th>
-                    <th>Startdato</th>
-                    <th>Slutdato</th>
-                </x-slot>
-                @foreach($upcomingCompetitions as $competition)
-                    <tr wire:key="{{ $competition->id }}" class="dark:bg-gray-700">
-                        <td>{{ $competition->name }}</td>
-                        <td>{{ $competition->start_date }}</td>
-                        <td>{{ $competition->end_date }}</td>
-                    </tr>
-                @endforeach
-            </x-bladewind::table>
-        </x-main-container>
-    @endif
+        @if ($paidInvoices->isNotEmpty())
+            <x-mush.comp.card title="Betalte fakturaer">
+                <x-mush.comp.table>
+                    <x-slot:header>
+                        <x-mush.comp.table-th>#</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
+                    </x-slot:header>
+                    <x-slot:body>
+                        @foreach($paidInvoices as $invoice)
+                            <x-mush.comp.table-tr wire:key="{{ $invoice->id }}">
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
+                                        #{{ $invoice->invoice_number }}
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->competition->id }}">
+                                        {{ $invoice->competition->name }}
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td class="text-right">
+                                        {{ number_format($invoice->amount, 2) }}
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
+                                        <x-bladewind::button size="tiny">
+                                            Vis faktura
+                                        </x-bladewind::button>
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                            </x-mush.comp.table-tr>
+                        @endforeach
+                    </x-slot:body>
+                </x-mush.comp.table>
+            </x-mush.comp.card>
+        @endif
+
+        @if ($upcomingCompetitions->isNotEmpty())
+            <x-mush.comp.card title="Kommende konkurrencer">
+                <x-mush.comp.table>
+                    <x-slot:header>
+                        <x-mush.comp.table-th>Navn</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Startdato</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Slutdato</x-mush.comp.table-th>
+                    </x-slot:header>
+                    <x-slot:body>
+                        @foreach($upcomingCompetitions as $competition)
+                            <x-mush.comp.table-tr wire:key="{{ $competition->id }}">
+                                <x-mush.comp.table-td>
+                                    {{ $competition->name }}
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    {{ $competition->start_date }}
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    {{ $competition->end_date }}
+                                </x-mush.comp.table-td>
+                            </x-mush.comp.table-tr>
+                        @endforeach
+                    </x-slot:body>
+                </x-mush.comp.table>
+            </x-mush.comp.card>
+        @endif
+    </x-mush.layout.container>
 </div>

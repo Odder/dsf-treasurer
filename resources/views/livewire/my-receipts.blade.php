@@ -13,73 +13,69 @@
     ];
 @endphp
 
-<x-slot name="header">
+<x-slot:header>
     Mine udlæg
-</x-slot>
+</x-slot:header>
 
-<x-main-container>
-    <x-bladewind::table
-        layout="custom"
-        divided="thin"
-        :data="$receipts"
-    >
-        <x-slot:header>
-            <th>Kvittering</th>
-            <th>Beløb</th>
-            <th>Beskrivelse</th>
-            <th>Forening</th>
-            <th>Konkurrence</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </x-slot:header>
+<x-mush.layout.container>
+    <div></div>
+    <x-mush.comp.card>
 
-        <tbody>
-        @forelse ($receipts as $receipt)
-            <tr wire:key="{{ $receipt->id }}" class="dark:bg-gray-700">
-                <td>
-                    <a href="{{ asset('storage/' . $receipt->image_path) }}" target="_blank">
-                        <img src="{{ asset('storage/' . $receipt->image_path) }}" alt="Receipt" style="max-width: 100px;">
-                    </a>
-                </td>
-                <td>{{ number_format($receipt->amount, 2, ',', '.') }}</td>
-                <td>{{ $receipt->description }}</td>
-                <td>
-                    @if ($receipt->association)
-                        <a href="/regional-associations/{{ $receipt->association->id }}" wire:navigate.hover>
-                            {{ $receipt->association->name }}
-                        </a>
-                    @else
-                        -
-                    @endif
-                </td>
-                <td>
-                    @if ($receipt->competition)
-                        <a href="/competitions/{{ $receipt->competition->id }}" wire:navigate.hover>
-                            {{ $receipt->competition->name }}
-                        </a>
-                    @else
-                        -
-                    @endif
-                </td>
-                <td>
-                    @php
-                        $status = $receipt->status;
-                    @endphp
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClasses[$status] }}">
+        <x-mush.comp.table>
+            <x-slot:header>
+                <x-mush.comp.table-th>Kvittering</x-mush.comp.table-th>
+                <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
+                <x-mush.comp.table-th>Beskrivelse</x-mush.comp.table-th>
+                <x-mush.comp.table-th>Forening</x-mush.comp.table-th>
+                <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                <x-mush.comp.table-th>Status</x-mush.comp.table-th>
+                <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
+            </x-slot:header>
+
+            <x-slot:body>
+                @forelse ($receipts as $receipt)
+                    <x-mush.comp.table-tr wire:key="{{ $receipt->id }}">
+                        <x-mush.comp.table-td>
+                            <a href="{{ asset('storage/' . $receipt->image_path) }}" target="_blank">
+                                <img src="{{ asset('storage/' . $receipt->image_path) }}" alt="Receipt" style="max-width: 100px;">
+                            </a>
+                        </x-mush.comp.table-td>
+                        <x-mush.comp.table-td>{{ number_format($receipt->amount, 2, ',', '.') }}</x-mush.comp.table-td>
+                        <x-mush.comp.table-td>{{ $receipt->description }}</x-mush.comp.table-td>
+                        <x-mush.comp.table-td>
+                            @if ($receipt->association)
+                                <x-mush.link link="/regional-associations/{{ $receipt->association->id }}">
+                                    {{ $receipt->association->name }}
+                                </x-mush.link>
+                            @endif
+                        </x-mush.comp.table-td>
+                        <x-mush.comp.table-td>
+                            @if ($receipt->competition)
+                                <x-mush.link link="/competitions/{{ $receipt->competition->id }}">
+                                    {{ $receipt->competition->name }}
+                                </x-mush.link>
+                            @endif
+                        </x-mush.comp.table-td>
+                        <x-mush.comp.table-td>
+                            @php
+                                $status = $receipt->status;
+                            @endphp
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClasses[$status] }}">
                         {{ $statusText[$status] }}
                     </span>
-                </td>
-                <td>
-                    @if($receipt->status == 'reported' || $receipt->status == 'accepted')
-                        <x-bladewind::button wire:click="updateStatus('{{$receipt->id}}', 'rejected')" size="tiny" color="red">Annulér</x-bladewind::button>
-                    @endif
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="7">Ingen udlæg fundet.</td>
-            </tr>
-        @endforelse
-        </tbody>
-    </x-bladewind::table>
-</x-main-container>
+                        </x-mush.comp.table-td>
+                        <x-mush.comp.table-td>
+                            @if($receipt->status == 'reported' || $receipt->status == 'accepted')
+                                <x-bladewind::button wire:click="updateStatus('{{$receipt->id}}', 'rejected')" size="tiny" color="red">Annulér</x-bladewind::button>
+                            @endif
+                        </x-mush.comp.table-td>
+                    </x-mush.comp.table-tr>
+                @empty
+                    <x-mush.comp.table-tr>
+                        <x-mush.comp.table-td colspan="7">Ingen udlæg fundet.</x-mush.comp.table-td>
+                    </x-mush.comp.table-tr>
+                @endforelse
+            </x-slot:body>
+        </x-mush.comp.table>
+    </x-mush.comp.card>
+</x-mush.layout.container>

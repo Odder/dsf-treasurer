@@ -14,9 +14,9 @@
     $status = $invoice->status ?? 'draft'; // Default to 'draft' if status is not set
 @endphp
 <div>
-    <x-slot name="header">
+    <x-slot:header>
         Faktura for {{ $invoice->competition->name }}
-    </x-slot>
+    </x-slot:header>
         <!-- Status Banner -->
     <div class="{{ $statusClasses[$status] }} py-3 text-center font-semibold no-print">
         {{ $statusText[$status] }}

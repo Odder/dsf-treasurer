@@ -1,6 +1,6 @@
-<x-slot name="header">
+<x-slot:header>
     Opret udlæg
-</x-slot>
+</x-slot:header>
 
 <div>
     @if (session()->has('message'))
