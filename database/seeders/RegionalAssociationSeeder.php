@@ -43,7 +43,7 @@ class RegionalAssociationSeeder extends Seeder
         RegionalAssociation::create([
             'name' => 'Hvidovre Speedcubing Forening',
             'address' => 'Hvidovre',
-            'wcif_identifier' => 'Furesø',
+            'wcif_identifier' => 'Hvidovre',
             'chairman_contact_id' => '9e22614e-35d4-4b57-8475-522daff361ab',
             'treasurer_contact_id' => '9e22614e-3463-4665-9701-4d42756c6cfd',
         ]);

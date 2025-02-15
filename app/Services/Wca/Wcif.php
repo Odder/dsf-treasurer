@@ -53,6 +53,9 @@ class Wcif
 
     public function getRegionalAssociation()
     {
+        if (!$this->raw) {
+            return null;
+        }
         $extensions = collect($this->raw['extensions']);
         try {
             $associationExtension = $extensions->firstWhere('id', 'dsfAssociationInfo');
@@ -63,8 +66,26 @@ class Wcif
         }
     }
 
-    public function getOrganisingRegionalAssociation()
+    public function getBillingAssociation()
     {
+        if (!$this->raw) {
+            return null;
+        }
+        $extensions = collect($this->raw['extensions']);
+        try {
+            $associationExtension = $extensions->firstWhere('id', 'dsfAssociationInfo');
+            return $associationExtension['data']['billingAssociation'];
+        }
+        catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function getOrganisingAssociation()
+    {
+        if (!$this->raw) {
+            return null;
+        }
         $extensions = collect($this->raw['extensions']);
         try {
             $associationExtension = $extensions->firstWhere('id', 'dsfAssociationInfo');
@@ -75,14 +96,14 @@ class Wcif
         }
     }
 
-    public function addRegionalAssociation(RegionalAssociation $association)
+    public function addRegionalAssociation(RegionalAssociation $billingAssociation, ?RegionalAssociation $organisingAssociation = null)
     {
         $extension = [
             'id' => 'dsfAssociationInfo',
             'specUrl' => 'https://tools.danskspeedcubingforening.dk/foreninger',
             'data' => [
-                'organisingAssociation' => $association->wcif_identifier,
-                'billingAssociation' => $association->wcif_identifier,
+                'billingAssociation' => $billingAssociation->wcif_identifier,
+                'organisingAssociation' => $organisingAssociation ? $organisingAssociation->wcif_identifier : $billingAssociation->wcif_identifier,
             ],
         ];
 

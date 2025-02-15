@@ -28,6 +28,22 @@ class Competition extends Model
         return new Wcif(json_decode($this->attributes['wcif'], true));
     }
 
+    public function getOrganisingAssociationAttribute(): ?RegionalAssociation
+    {
+        if (!$wcif_id = $this->wcif->getOrganisingAssociation()) {
+            return null;
+        }
+        return RegionalAssociation::where('wcif_identifier', $wcif_id)->first();
+    }
+
+    public function getBillingAssociationAttribute(): ?RegionalAssociation
+    {
+        if (!$wcif_id = $this->wcif->getBillingAssociation()) {
+            return null;
+        }
+        return RegionalAssociation::where('wcif_identifier', $wcif_id)->first();
+    }
+
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);

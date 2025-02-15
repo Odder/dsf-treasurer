@@ -27,10 +27,10 @@
                         </x-mush.comp.table-td>
 
                         <x-mush.comp.table-td>
-                            @if($competition->invoices->first()?->association)
+                            @if($competition->billingAssociation)
                                 <x-mush.link
-                                    link="/regional-associations/{{ $competition->invoices->first()->association->id }}">
-                                    {{ $competition->invoices->first()->association->name }}
+                                    link="/regional-associations/{{ $competition->billingAssociation->id }}">
+                                    {{ $competition->billingAssociation->name }}
                                 </x-mush.link>
                             @endif
                         </x-mush.comp.table-td>

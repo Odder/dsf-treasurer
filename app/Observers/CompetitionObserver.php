@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\UpdateCompetitionWcif;
 use App\Models\Competition;
 
 class CompetitionObserver
@@ -11,7 +12,7 @@ class CompetitionObserver
      */
     public function created(Competition $competition): void
     {
-        //
+        UpdateCompetitionWcif::dispatch($competition);
     }
 
     /**

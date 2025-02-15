@@ -6,6 +6,7 @@ use App\Jobs\GenerateInvoice;
 use App\Jobs\UpdateCompetitionWcif;
 use App\Models\Competition;
 use App\Services\Wca\Wcif;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class CompetitionDetails extends Component
@@ -23,12 +24,15 @@ class CompetitionDetails extends Component
 
     public function render()
     {
+        $canEditWcif = Gate::allows('editWcif', $this->competition);
+
         return view('livewire.competition-details', [
             'competition' => $this->competition,
             'wcif' => $this->competition->wcif,
             'organisers' => $this->organisers,
             'events' => $this->events,
             'totalEvents' => $this->totalEvents,
+            'canEditWcif' => $canEditWcif,
         ]);
     }
 
@@ -47,6 +51,14 @@ class CompetitionDetails extends Component
         session()->flash('message', 'Invoice generation job dispatched!');
         $this->loadWcifData();
         $this->render();
+    }
+
+    public function openWcifEditDialog(): void
+    {
+        if (! Gate::allows('editWcif', $this->competition)) {
+            abort(403, 'Unauthorized. You are not authorized to edit this competition WCIF.');
+        }
+        $this->dispatch('open-dialog', id: 'competitionWcifEditDialog');
     }
 
     private function loadWcifData(): void

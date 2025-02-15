@@ -13,6 +13,9 @@
     <x-mush.layout.container>
         <div></div>
         <x-action-container>
+            @if($canEditWcif)
+                <x-bladewind::button wire:click="openWcifEditDialog">Edit WCIF Association</x-bladewind::button>
+            @endif
             <div wire:loading wire:target="refetchWcif">
                 <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 24 24">
@@ -58,9 +61,9 @@
                             {{ $competition->name }}
                         </a>
                     </p>
-                    <p>WCA ID: {{ $competition->wca_id }}</p>
+                    <p>Organiserende forening: {{ $competition->organising_association?->name }}</p>
+                    <p>Fakturerende forening: {{ $competition->billing_association?->name }}</p>
                     <p>Startdato: {{ $competition->start_date }}</p>
-                    <p>Slutdato: {{ $competition->end_date }}</p>
                     @error('wcif') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
             </x-mush.comp.card>
@@ -105,4 +108,5 @@
             </div>
         </x-mush.comp.card>
     </x-mush.layout.container>
+    <livewire:competition-wcif-edit-dialog :competition="$competition"/>
 </div>

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Competition;
 use App\Models\Invoice;
+use App\Policies\CompetitionPolicy;
 use App\Policies\InvoicePolicy;
 use App\Socialite\Wca\Provider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -11,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
         Invoice::class => InvoicePolicy::class,
+        Competition::class => CompetitionPolicy::class,
     ];
     /**
      * Register any authentication / authorization services.
