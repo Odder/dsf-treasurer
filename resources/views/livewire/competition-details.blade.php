@@ -11,6 +11,7 @@
     @endif
 
     <x-mush.layout.container>
+        <div></div>
         <x-action-container>
             <div wire:loading wire:target="refetchWcif">
                 <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"

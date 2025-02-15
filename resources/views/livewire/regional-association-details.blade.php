@@ -4,6 +4,8 @@
     </x-slot:header>
 
     <x-mush.layout.container>
+        <div></div>
+        
         <x-action-container>
             <a href="https://danskspeedcubingforening.dk/nyttig-info/">
                 <x-bladewind::button class="relative">
