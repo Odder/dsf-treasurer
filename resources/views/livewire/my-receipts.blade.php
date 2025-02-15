@@ -1,9 +1,9 @@
 @php
-    $statusClasses = [
-        'reported' => 'bg-gray-100 text-gray-800',
-        'accepted' => 'bg-green-100 text-green-800',
-        'rejected' => 'bg-red-100 text-red-800',
-        'settled' => 'bg-blue-100 text-blue-800',
+    $statusLevel = [
+        'reported' => 'draft',
+        'accepted' => 'info',
+        'rejected' => 'danger',
+        'settled' => 'success',
     ];
     $statusText = [
         'reported' => 'Indsendt',
@@ -57,12 +57,7 @@
                             @endif
                         </x-mush.comp.table-td>
                         <x-mush.comp.table-td>
-                            @php
-                                $status = $receipt->status;
-                            @endphp
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClasses[$status] }}">
-                        {{ $statusText[$status] }}
-                    </span>
+                            <x-mush.comp.badge :level="$statusLevel[$receipt->status]" :text="$statusText[$receipt->status]" />
                         </x-mush.comp.table-td>
                         <x-mush.comp.table-td>
                             @if($receipt->status == 'reported' || $receipt->status == 'accepted')

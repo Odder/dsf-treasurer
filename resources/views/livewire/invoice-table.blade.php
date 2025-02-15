@@ -8,6 +8,7 @@
 
 <x-mush.layout.container>
     <div></div>
+
     <x-mush.comp.card>
         <x-mush.comp.table>
             <x-slot:header>
@@ -31,10 +32,10 @@
 
                         <x-mush.comp.table-td>
                             @php
-                                $statusColor = match ($invoice->status) {
-                                    'paid' => 'green',
-                                    'unpaid' => 'yellow',
-                                    'overdue' => 'red',
+                                $level = match ($invoice->status) {
+                                    'paid' => 'success',
+                                    'unpaid' => 'warning',
+                                    'overdue' => 'danger',
                                     default => 'gray',
                                 };
                                 $statusText = match ($invoice->status) {
@@ -44,10 +45,7 @@
                                     default => 'Kladde',
                                 };
                             @endphp
-                            <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $statusColor }}-100 text-{{ $statusColor }}-800">
-                                    {{ $statusText }}
-                                </span>
+                            <x-mush.comp.badge :level="$level" :text="$statusText" />
                         </x-mush.comp.table-td>
 
                         <x-mush.comp.table-td>

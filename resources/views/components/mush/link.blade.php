@@ -2,6 +2,6 @@
     'link',
 ])
 
-<a href="{{ $link }}" wire:navigate.hover>
+<a href="{{ $link }}" wire:navigate.hover class="hover:underline">
     {{ $slot }}
 </a>
