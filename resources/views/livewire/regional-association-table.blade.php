@@ -1,6 +1,6 @@
 <div>
     <x-slot:header>
-        Regional Associations
+        Regionale foreninger
     </x-slot:header>
 
     <x-mush.layout.container>
@@ -9,10 +9,10 @@
         <x-mush.comp.card>
             <x-mush.comp.table>
                 <x-slot:header>
-                    <x-mush.comp.table-th>Name</x-mush.comp.table-th>
-                    <x-mush.comp.table-th># Competitions</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Chairman</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Treasurer</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Navn</x-mush.comp.table-th>
+                    <x-mush.comp.table-th># Konkurrencer</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Formand</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Kasserer</x-mush.comp.table-th>
                 </x-slot:header>
 
                 <x-slot:body>
