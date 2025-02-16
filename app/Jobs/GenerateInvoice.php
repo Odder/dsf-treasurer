@@ -49,7 +49,7 @@ class GenerateInvoice implements ShouldQueue
                 }
                 $regionalAssociation = RegionalAssociation::where('wcif_identifier', '=', $wcif->getRegionalAssociation())->first();
                 $participants = $wcif->getCompetitors()->count();
-                $nonPayingParticipants = $wcif->getCompetitors()->filter(fn($c) => $c['roles'] && in_array('organizer', $c['roles']))->count();
+                $nonPayingParticipants = $wcif->getCompetitors()->filter(fn($c) => $c['roles'] && (in_array('organizer', $c['roles']) || in_array('delegate', $c['roles'])))->count();
                 $invoice = $this->competition->invoices()->create([
                     'participants' => $participants,
                     'amount' => 25 * ($participants- $nonPayingParticipants),
