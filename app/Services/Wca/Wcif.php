@@ -16,10 +16,17 @@ class Wcif
         $this->raw = $raw;
     }
 
-    public static function fromId($id)
+    public static function fromId($id, $public = true)
     {
         try {
-            $response = Http::wca()->get("competitions/{$id}/wcif/public");
+            if ($public)  {
+                $response = Http::wca()->get("competitions/{$id}/wcif/public");
+            } else {
+                $response = Http::wca()
+                    ->withHeaders([
+                        'Authorization' => 'bearer '.config('app.wca_api_key')
+                    ])->get("competitions/{$id}/wcif");
+            }
 
             if ($response->successful()) {
                 return new static($response->json());

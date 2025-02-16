@@ -18,7 +18,7 @@ class UpdateCompetitionWcif implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private readonly Competition $competition)
+    public function __construct(private readonly Competition $competition, private readonly bool $public = true)
     {
         //
     }
@@ -28,7 +28,7 @@ class UpdateCompetitionWcif implements ShouldQueue
      */
     public function handle(): void
     {
-        $wcif = Wcif::fromId($this->competition->wca_id);
+        $wcif = Wcif::fromId($this->competition->wca_id, $this->public);
         $regionalAssociation = RegionalAssociation::where('wcif_identifier', '=', $wcif->getRegionalAssociation())->first();
         $this->competition->update([
             'wcif' => $wcif->raw,

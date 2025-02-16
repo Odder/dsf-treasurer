@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Competition;
 use App\Models\RegionalAssociation;
-use App\Services\Wca\Wcif;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 

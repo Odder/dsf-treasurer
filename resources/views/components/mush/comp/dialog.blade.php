@@ -19,7 +19,7 @@
 
 <dialog
     id="{{ $id }}"
-    class="bg-white dark:bg-gray-800 rounded-lg shadow-xl {{ $maxWidthClass }} w-1/2"
+    class="bg-white dark:bg-gray-800 rounded-lg shadow-xl {{ $maxWidthClass }} w-1/2 backdrop:bg-black/60"
     x-data="{ open: {{ $open ? 'true' : 'false' }} }"
     x-on:open-dialog.window="if ($event.detail.id === '{{ $id }}') { open = true; $el.showModal(); }"
     x-on:close-dialog.window="open = false; $el.close();"
