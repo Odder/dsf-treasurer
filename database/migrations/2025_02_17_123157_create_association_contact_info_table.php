@@ -22,8 +22,6 @@ return new class extends Migration
         });
 
         Schema::table('regional_associations', function (Blueprint $table) {
-            $table->dropForeign(['chairman_contact_id']);
-            $table->dropForeign(['treasurer_contact_id']);
             $table->dropColumn(['chairman_contact_id', 'treasurer_contact_id']);
         });
     }

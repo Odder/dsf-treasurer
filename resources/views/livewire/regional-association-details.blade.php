@@ -14,14 +14,24 @@
             </a>
         </x-action-container>
 
-        <x-mush.comp.card title="Detaljer">
-            <div class="p-4 pt-0">
-                <p>Navn: {{ $regionalAssociation->name }}</p>
-                <p>Formand: {{ $chairman?->name ?? 'N/A' }} ({{ $chairman?->email ?? 'N/A' }})</p>
-                <p>Kasserer: {{ $treasurer?->name ?? 'N/A' }} ({{ $treasurer?->email ?? 'N/A' }})</p>
-                <p>Udestående: {{ number_format($regionalAssociation->currentOutstanding(), 2) }}</p>
-            </div>
-        </x-mush.comp.card>
+        <x-mush.grid cols="2">
+            <x-mush.comp.card title="Detaljer">
+                <div class="p-4 pt-0">
+                    <p>Navn: {{ $regionalAssociation->name }}</p>
+                    <p>Antal konkurrencer: {{ $regionalAssociation->competitions()->count() }}</p>
+                    <p>Udestående: {{ number_format($regionalAssociation->currentOutstanding(), 2) }}</p>
+                </div>
+            </x-mush.comp.card>
+
+            <x-mush.comp.card title="Bestyrelse">
+                <div class="p-4 pt-0">
+                    <p>Formand: {{ $chairman?->name ?? 'N/A' }}</p>
+                    <p>Næstformand: {{ $viceChair?->name ?? 'N/A' }}</p>
+                    <p>Kasserer: {{ $treasurer?->name ?? 'N/A' }}</p>
+                    <p>Revisor: {{ $accountant?->name ?? 'N/A' }}</p>
+                </div>
+            </x-mush.comp.card>
+        </x-mush.grid>
 
         @if ($unpaidInvoices->isNotEmpty())
             <x-mush.comp.card title="Ubetalte fakturaer">
