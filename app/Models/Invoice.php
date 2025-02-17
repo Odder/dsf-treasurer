@@ -73,21 +73,19 @@ class Invoice extends Model
     {
         $user = Auth::user();
         if (!$user) {
-            return $query->where('id', null); // Or throw an exception, or return an empty query
+            return $query->where('id', null);
         }
 
-        $regionalAssociationIds = ContactInfo::where('wca_id', $user->wca_id)->get()->map(function ($contact) {
-            return [
-                ...$contact->chairmanAssociations()->pluck('id'),
-                ...$contact->treasurerAssociations()->pluck('id'),
-            ];
-        })->flatten()->unique()->toArray();
+        $regionalAssociations = $user->contact?->associations;
 
-        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
-        if ($dsfAssociation && ($dsfAssociation->treasurer?->wca_id == $user->wca_id || $dsfAssociation->chairman?->wca_id == $user->wca_id)) {
+        if (!$regionalAssociations) {
+            return $query->where('id', null);
+        }
+
+        if ($regionalAssociations->where('wcif_identifier', 'DSF')->isNotEmpty()) {
             return $query;
         }
 
-        return $query->whereIn('association_id', $regionalAssociationIds);
+        return $query->whereIn('association_id', $regionalAssociations->pluck('id'));
     }
 }

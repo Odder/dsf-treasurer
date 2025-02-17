@@ -80,7 +80,7 @@
                     </x-mush.comp.table-tr>
                 @empty
                     <x-mush.comp.table-tr>
-                        <x-mush.comp.table-td colspan="6">
+                        <x-mush.comp.table-td colspan="7">
                             <div class="text-sm text-white-500">Ingen fakturaer fundet.</div>
                         </x-mush.comp.table-td>
                     </x-mush.comp.table-tr>

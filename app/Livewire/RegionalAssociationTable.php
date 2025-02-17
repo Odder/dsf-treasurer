@@ -17,7 +17,7 @@ class RegionalAssociationTable extends Component
     public function render()
     {
         return view('livewire.regional-association-table', [
-            'regionalAssociations' => RegionalAssociation::with(['chairman', 'treasurer', 'competitions'])->paginate($this->perPage),
+            'regionalAssociations' => RegionalAssociation::with(['members', 'competitions'])->paginate($this->perPage),
         ]);
     }
 }

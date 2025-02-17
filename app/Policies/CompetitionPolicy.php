@@ -13,12 +13,6 @@ class CompetitionPolicy
      */
     public function editWcif(User $user, Competition $competition): bool
     {
-        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
-
-        if ($dsfAssociation) {
-            return ($dsfAssociation->treasurer?->wca_id == $user->wca_id || $dsfAssociation->chairman?->wca_id == $user->wca_id);
-        }
-
-        return false;
+        return $user->isDSFBoardMember();
     }
 }

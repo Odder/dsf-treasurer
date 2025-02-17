@@ -17,10 +17,8 @@
         <x-mush.comp.card title="Detaljer">
             <div class="p-4 pt-0">
                 <p>Navn: {{ $regionalAssociation->name }}</p>
-                <p>Formand: {{ $regionalAssociation->chairman?->name ?? 'N/A' }}
-                    ({{ $regionalAssociation->chairman?->email ?? 'N/A' }})</p>
-                <p>Kasserer: {{ $regionalAssociation->treasurer?->name ?? 'N/A' }}
-                    ({{ $regionalAssociation->treasurer?->email ?? 'N/A' }})</p>
+                <p>Formand: {{ $chairman?->name ?? 'N/A' }} ({{ $chairman?->email ?? 'N/A' }})</p>
+                <p>Kasserer: {{ $treasurer?->name ?? 'N/A' }} ({{ $treasurer?->email ?? 'N/A' }})</p>
                 <p>Udestående: {{ number_format($regionalAssociation->currentOutstanding(), 2) }}</p>
             </div>
         </x-mush.comp.card>

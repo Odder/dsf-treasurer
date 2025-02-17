@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\AssociationRole;
 use App\Models\ContactInfo;
 use App\Models\Invoice;
 use App\Models\User;
@@ -14,15 +15,7 @@ class InvoicePolicy
      */
     public function viewAny(User $user): bool
     {
-        // Check if the user is associated with DSF
-        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
-
-        if ($dsfAssociation) {
-            if ($dsfAssociation->treasurer->wca_id == $user->wca_id || $dsfAssociation->chairman->id == $user->wca_id) {
-                return true;
-            }
-        }
-        return false;
+        return $user->isDSFBoardMember();
     }
 
     /**
@@ -38,15 +31,7 @@ class InvoicePolicy
      */
     public function markAsPaid(User $user, Invoice $invoice): bool
     {
-        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
-
-        if ($dsfAssociation) {
-            if ($dsfAssociation->treasurer->wca_id == $user->wca_id || $dsfAssociation->chairman->id == $user->wca_id) {
-                return true;
-            }
-        }
-
-        return false;
+        return $user->isDSFBoardMember();
     }
 
     /**

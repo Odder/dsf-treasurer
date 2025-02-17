@@ -39,7 +39,7 @@
             <div>
                 <h2 class="text-lg font-semibold text-gray-700 mb-2">Modtager:</h2>
                 <p class="text-gray-600">{{ $invoice->association?->name }}</p>
-                <p class="text-gray-600">Kasserer: {{ $invoice->association?->treasurer?->name }}</p>
+                <p class="text-gray-600">Kasserer: {{ $invoice->association?->treasurer?->first()?->name }}</p>
             </div>
             <div class="sm:text-right">
                 <h2 class="text-lg font-semibold text-gray-700 mb-2">Afsender:</h2>

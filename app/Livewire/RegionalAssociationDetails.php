@@ -20,6 +20,8 @@ class RegionalAssociationDetails extends Component
             'unpaidInvoices' => $this->regionalAssociation->unpaidInvoices()->forCurrentUser()->get(),
             'paidInvoices' => $this->regionalAssociation->paidInvoices()->forCurrentUser()->get(),
             'upcomingCompetitions' => $this->regionalAssociation->competitions()->where('start_date', '>', now())->get(),
+            'chairman' => $this->regionalAssociation->chairman()->first(),
+            'treasurer' => $this->regionalAssociation->treasurer()->first(),
         ]);
     }
 }

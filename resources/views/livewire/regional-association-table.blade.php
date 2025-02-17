@@ -12,6 +12,7 @@
                     <x-mush.comp.table-th>Navn</x-mush.comp.table-th>
                     <x-mush.comp.table-th># Konkurrencer</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Formand</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Næstformand</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Kasserer</x-mush.comp.table-th>
                 </x-slot:header>
 
@@ -24,8 +25,9 @@
                                 </x-mush.link>
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ $association->competitions?->count() }}</x-mush.comp.table-td>
-                            <x-mush.comp.table-td>{{ $association->chairman?->name }}</x-mush.comp.table-td>
-                            <x-mush.comp.table-td>{{ $association->treasurer?->name }}</x-mush.comp.table-td>
+                            <x-mush.comp.table-td>{{ $association->chairman->first()?->name }}</x-mush.comp.table-td>
+                            <x-mush.comp.table-td>{{ $association->viceChair->first()?->name }}</x-mush.comp.table-td>
+                            <x-mush.comp.table-td>{{ $association->treasurer->first()?->name }}</x-mush.comp.table-td>
                         </x-mush.comp.table-tr>
                     @empty
                         <x-mush.comp.table-tr>

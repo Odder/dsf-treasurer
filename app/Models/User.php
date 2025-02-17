@@ -3,8 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\AssociationRole;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
@@ -55,5 +58,35 @@ class User extends Authenticatable
                 'oscarrothandersen@gmail.com',
             ]);
         });
+    }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(ContactInfo::class, 'wca_id', 'wca_id');
+    }
+
+    public function isMemberOfAssociation(?RegionalAssociation $association): bool
+    {
+        $contactInfo = $this->contact()->first();
+        if (!$contactInfo) {
+            return false;
+        }
+
+        if (!$association) {
+            return $contactInfo->associations()->exists();
+        }
+
+        return $contactInfo->associations->contains($association->id);
+    }
+
+    public function isDSFBoardMember(): bool
+    {
+        $dsfAssociation = RegionalAssociation::where('wcif_identifier', 'DSF')->first();
+
+        if (!$dsfAssociation) {
+            return false;
+        }
+
+        return $this->isMemberOfAssociation($dsfAssociation);
     }
 }

@@ -22,11 +22,7 @@ class InvoiceTable extends Component
             return redirect('/login');
         }
 
-        if (Gate::allows('viewAny', Invoice::class)) {
-            $invoices = Invoice::with('association')->paginate($this->perPage);
-        } else {
-            $invoices = Invoice::forCurrentUser()->with('association')->paginate($this->perPage);
-        }
+        $invoices = Invoice::forCurrentUser()->with('association')->paginate($this->perPage);
 
         return view('livewire.invoice-table', [
             'invoices' => $invoices,

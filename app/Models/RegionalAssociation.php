@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\AssociationRole;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class RegionalAssociation extends Model
 {
@@ -38,14 +38,26 @@ class RegionalAssociation extends Model
         return $this->competitions()->count();
     }
 
-    public function chairman(): BelongsTo
+    public function members(): BelongsToMany
     {
-        return $this->belongsTo(ContactInfo::class, 'chairman_contact_id');
+        return $this->belongsToMany(ContactInfo::class, 'association_contact_info')
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
-    public function treasurer(): BelongsTo
+    public function treasurer(): BelongsToMany
     {
-        return $this->belongsTo(ContactInfo::class, 'treasurer_contact_id');
+        return $this->members()->wherePivot('role', AssociationRole::TREASURER);
+    }
+
+    public function chairman(): BelongsToMany
+    {
+        return $this->members()->wherePivot('role', AssociationRole::CHAIRMAN);
+    }
+
+    public function viceChair(): BelongsToMany
+    {
+        return $this->members()->wherePivot('role', AssociationRole::VICE_CHAIR);
     }
 
     public function currentOutstanding(): float

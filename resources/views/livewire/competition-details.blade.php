@@ -108,5 +108,7 @@
             </div>
         </x-mush.comp.card>
     </x-mush.layout.container>
-    <livewire:competition-wcif-edit-dialog :competition="$competition"/>
+    @if($canEditWcif)
+        <livewire:competition-wcif-edit-dialog :competition="$competition"/>
+    @endif
 </div>

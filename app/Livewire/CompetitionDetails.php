@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Jobs\GenerateInvoice;
 use App\Jobs\UpdateCompetitionWcif;
 use App\Models\Competition;
-use App\Services\Wca\Wcif;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
