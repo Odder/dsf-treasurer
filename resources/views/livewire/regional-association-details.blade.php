@@ -68,6 +68,11 @@
                             </x-mush.comp.table-tr>
                         @endforeach
                     </x-slot:body>
+                    <x-slot:footer>
+                        <div class="px-4 py-3 bg-white dark:bg-gray-800 border-t border-gray-500">
+                            {{ $unpaidInvoices->links() }}
+                        </div>
+                    </x-slot:footer>
                 </x-mush.comp.table>
             </x-mush.comp.card>
         @endif
@@ -134,6 +139,11 @@
                             </x-mush.comp.table-tr>
                         @endforeach
                     </x-slot:body>
+                    <x-slot:footer>
+                        <div class="px-4 py-3 bg-white dark:bg-gray-800 border-t border-gray-500">
+                            {{ $paidInvoices->links() }}
+                        </div>
+                    </x-slot:footer>
                 </x-mush.comp.table>
             </x-mush.comp.card>
         @endif

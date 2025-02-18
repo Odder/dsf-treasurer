@@ -15,7 +15,7 @@
         <x-action-container>
             @if($canEditWcif)
                 <x-bladewind::button wire:click="openWcifEditDialog">Edit WCIF Association</x-bladewind::button>
-            @endif
+
             <div wire:loading wire:target="refetchWcif">
                 <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                      viewBox="0 0 24 24">
@@ -33,22 +33,25 @@
             >
                 <span>Genhent WCIF</span>
             </x-bladewind::button>
-            @if ($competition->invoices()->exists())
-                <x-mush.link link="{{ route('invoices.show', $competition->invoices()->first()) }}">
-                    <x-bladewind::button>
-                        <x-wca-logo class="mr-2 inline-block" width="25" height="25"/>
-                        Se Faktura
+            @endif
+            @if (auth()->user()->isMemberOfAssociation())
+                @if ($competition->invoices()->exists())
+                    <x-mush.link link="{{ route('invoices.show', $competition->invoices()->first()) }}">
+                        <x-bladewind::button>
+                            <x-wca-logo class="mr-2 inline-block" width="25" height="25"/>
+                            Se Faktura
+                        </x-bladewind::button>
+                    </x-mush.link>
+                @else
+                    <x-bladewind::button wire:click="generateInvoice">
+                        Generér faktura
                     </x-bladewind::button>
-                </x-mush.link>
-            @else
-                <x-bladewind::button wire:click="generateInvoice">
-                    Generér faktura
-                </x-bladewind::button>
+                @endif
             @endif
             <a href="https://www.worldcubeassociation.org/competitions/{{ $competition->wca_id }}" target="_blank">
                 <x-bladewind::button>
                     <x-wca-logo class="mr-2 inline-block" width="25" height="25"/>
-                    View on WCA
+                    Se på WCA
                 </x-bladewind::button>
             </a>
         </x-action-container>

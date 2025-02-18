@@ -17,8 +17,8 @@ class RegionalAssociationDetails extends Component
     public function render()
     {
         return view('livewire.regional-association-details', [
-            'unpaidInvoices' => $this->regionalAssociation->unpaidInvoices()->forCurrentUser()->get(),
-            'paidInvoices' => $this->regionalAssociation->paidInvoices()->forCurrentUser()->get(),
+            'unpaidInvoices' => $this->regionalAssociation->unpaidInvoices()->forCurrentUser()->paginate(10),
+            'paidInvoices' => $this->regionalAssociation->paidInvoices()->forCurrentUser()->paginate(10),
             'upcomingCompetitions' => $this->regionalAssociation->competitions()->where('start_date', '>', now())->get(),
             'chairman' => $this->regionalAssociation->chairman()->first(),
             'treasurer' => $this->regionalAssociation->treasurer()->first(),
