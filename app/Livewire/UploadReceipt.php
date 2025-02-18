@@ -6,6 +6,7 @@ use App\Models\Competition;
 use App\Models\Receipt;
 use App\Models\RegionalAssociation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -35,7 +36,7 @@ class UploadReceipt extends Component
     {
         $this->validate();
 
-        $path = $this->receiptFile->store('receipts', 'public');
+        $path = Storage::disk('s3')->putFile('/receipts', $this->receiptFile);
 
         Receipt::create([
             'user_id' => Auth::id(),

@@ -36,8 +36,8 @@
                 @forelse ($receipts as $receipt)
                     <x-mush.comp.table-tr wire:key="{{ $receipt->id }}">
                         <x-mush.comp.table-td>
-                            <a href="{{ asset('storage/' . $receipt->image_path) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $receipt->image_path) }}" alt="Receipt" style="max-width: 100px;">
+                            <a href="{{ Storage::disk('s3')->url($receipt->image_path) }}" target="_blank">
+                                <img src="{{ Storage::disk('s3')->url($receipt->image_path) }}" alt="Receipt" style="max-width: 100px;">
                             </a>
                         </x-mush.comp.table-td>
                         <x-mush.comp.table-td>{{ number_format($receipt->amount, 2, ',', '.') }}</x-mush.comp.table-td>
