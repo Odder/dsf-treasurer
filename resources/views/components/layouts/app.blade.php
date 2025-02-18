@@ -38,13 +38,24 @@
 {{--                <h2 class="font-semibold size-7 block">DSF KASSERER!</h2>--}}
 {{--            </x-slot>--}}
             @auth
-                <x-mush.layout.menu-group title="Afregning">
-                    <x-mush.layout.menu-item title="Fakturaer" link="/invoices" match="invoice"/>
+                @if(auth()->user()->isMemberOfAssociation())
+                    <x-mush.layout.menu-group title="Afregning">
+                        <x-mush.layout.menu-item title="Fakturaer" link="/invoices" match="invoice"/>
+                    </x-mush.layout.menu-group>
+                @endif
+                <x-mush.layout.menu-group title="Konkurrencer">
                     <x-mush.layout.menu-item title="Konkurrencer" link="/competitions" match="competitions*"/>
                 </x-mush.layout.menu-group>
                 <x-mush.layout.menu-group title="Foreninger">
                     <x-mush.layout.menu-item title="Regionale foreninger" link="/regional-associations"
                                              match="regional-associations"/>
+                    @if($contact = auth()->user()->contact)
+                        @foreach($contact->associations as $association)
+                            <x-mush.layout.menu-item :title="$association->name"
+                                                     link="/regional-associations/{{ $association->id }}"
+                                                     match="regional-associations/{{ $association->id }}"/>
+                        @endforeach
+                    @endif
                 </x-mush.layout.menu-group>
                 <x-mush.layout.menu-group title="Udlæg">
                     <x-mush.layout.menu-item title="Opret udlæg" link="/receipts/upload" match="receipts/upload"/>

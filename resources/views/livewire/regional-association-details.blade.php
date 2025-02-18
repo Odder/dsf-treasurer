@@ -51,51 +51,12 @@
                                     </x-mush.link>
                                 </x-mush.comp.table-td>
                                 <x-mush.comp.table-td>
-                                    <x-mush.link link="/invoices/{{ $invoice->competition->id }}">
+                                    <x-mush.link link="/competitions/{{ $invoice->competition->id }}">
                                         {{ $invoice->competition->name }}
                                     </x-mush.link>
                                 </x-mush.comp.table-td>
                                 <x-mush.comp.table-td class="text-right">
                                     {{ number_format($invoice->amount, 2) }}
-                                </x-mush.comp.table-td>
-                                <x-mush.comp.table-td>
-                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
-                                        <x-bladewind::button size="tiny">
-                                            Vis faktura
-                                        </x-bladewind::button>
-                                    </x-mush.link>
-                                </x-mush.comp.table-td>
-                            </x-mush.comp.table-tr>
-                        @endforeach
-                    </x-slot:body>
-                </x-mush.comp.table>
-            </x-mush.comp.card>
-        @endif
-
-        @if ($paidInvoices->isNotEmpty())
-            <x-mush.comp.card title="Betalte fakturaer">
-                <x-mush.comp.table>
-                    <x-slot:header>
-                        <x-mush.comp.table-th>#</x-mush.comp.table-th>
-                        <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
-                        <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
-                        <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
-                    </x-slot:header>
-                    <x-slot:body>
-                        @foreach($paidInvoices as $invoice)
-                            <x-mush.comp.table-tr wire:key="{{ $invoice->id }}">
-                                <x-mush.comp.table-td>
-                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
-                                        #{{ $invoice->invoice_number }}
-                                    </x-mush.link>
-                                </x-mush.comp.table-td>
-                                <x-mush.comp.table-td>
-                                    <x-mush.link link="/invoices/{{ $invoice->competition->id }}">
-                                        {{ $invoice->competition->name }}
-                                    </x-mush.link>
-                                </x-mush.comp.table-td>
-                                <x-mush.comp.table-td class="text-right">
-                                        {{ number_format($invoice->amount, 2) }}
                                 </x-mush.comp.table-td>
                                 <x-mush.comp.table-td>
                                     <x-mush.link link="/invoices/{{ $invoice->id }}">
@@ -130,6 +91,45 @@
                                 </x-mush.comp.table-td>
                                 <x-mush.comp.table-td>
                                     {{ $competition->end_date }}
+                                </x-mush.comp.table-td>
+                            </x-mush.comp.table-tr>
+                        @endforeach
+                    </x-slot:body>
+                </x-mush.comp.table>
+            </x-mush.comp.card>
+        @endif
+
+        @if ($paidInvoices->isNotEmpty())
+            <x-mush.comp.card title="Betalte fakturaer">
+                <x-mush.comp.table>
+                    <x-slot:header>
+                        <x-mush.comp.table-th>#</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
+                        <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
+                    </x-slot:header>
+                    <x-slot:body>
+                        @foreach($paidInvoices as $invoice)
+                            <x-mush.comp.table-tr wire:key="{{ $invoice->id }}">
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
+                                        #{{ $invoice->invoice_number }}
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/competitions/{{ $invoice->competition->id }}">
+                                        {{ $invoice->competition->name }}
+                                    </x-mush.link>
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td class="text-right">
+                                    {{ number_format($invoice->amount, 2) }}
+                                </x-mush.comp.table-td>
+                                <x-mush.comp.table-td>
+                                    <x-mush.link link="/invoices/{{ $invoice->id }}">
+                                        <x-bladewind::button size="tiny">
+                                            Vis faktura
+                                        </x-bladewind::button>
+                                    </x-mush.link>
                                 </x-mush.comp.table-td>
                             </x-mush.comp.table-tr>
                         @endforeach

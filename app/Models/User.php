@@ -65,7 +65,7 @@ class User extends Authenticatable
         return $this->belongsTo(ContactInfo::class, 'wca_id', 'wca_id');
     }
 
-    public function isMemberOfAssociation(?RegionalAssociation $association): bool
+    public function isMemberOfAssociation(?RegionalAssociation $association=null): bool
     {
         $contactInfo = $this->contact()->first();
         if (!$contactInfo) {
