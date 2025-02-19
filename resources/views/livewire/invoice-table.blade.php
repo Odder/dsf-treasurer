@@ -1,5 +1,13 @@
 @php
     use Carbon\Carbon;
+
+    $statusFilterOptions = [
+        '' => 'Alle',
+        'paid' => 'Betalt',
+        'unpaid' => 'Ubetalt',
+        'overdue' => 'Forfalden',
+        'draft' => 'Kladde',
+    ]
 @endphp
 
 <x-slot:header>
@@ -10,6 +18,16 @@
     <div></div>
 
     <x-mush.comp.card>
+        <div class="p-4 flex flex-wrap gap-4">
+            <div>
+                <x-mush.form.select
+                    id="statusFilter"
+                    label="Status"
+                    :items="$statusFilterOptions"
+                />
+            </div>
+        </div>
+
         <x-mush.comp.table>
             <x-slot:header>
                 <x-mush.comp.table-th>#</x-mush.comp.table-th>

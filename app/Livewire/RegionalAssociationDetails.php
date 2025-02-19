@@ -22,6 +22,8 @@ class RegionalAssociationDetails extends Component
             'upcomingCompetitions' => $this->regionalAssociation->competitions()->where('start_date', '>', now())->get(),
             'chairman' => $this->regionalAssociation->chairman()->first(),
             'treasurer' => $this->regionalAssociation->treasurer()->first(),
+            'viceChair' => $this->regionalAssociation->viceChair()->first(),
+            'accountant' => $this->regionalAssociation->accountant()->first(),
         ]);
     }
 }

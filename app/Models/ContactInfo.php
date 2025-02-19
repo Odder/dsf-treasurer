@@ -17,6 +17,7 @@ class ContactInfo extends Model
         'name',
         'email',
         'address',
+        'wca_id',
     ];
 
     public function associations(): BelongsToMany

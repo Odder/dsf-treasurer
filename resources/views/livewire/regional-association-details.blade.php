@@ -12,6 +12,13 @@
                     <span>Se forening på DSF</span>
                 </x-bladewind::button>
             </a>
+            @if(auth()->user()->isDSFBoardMember())
+                <x-mush.link link="{{ route('regional-associations.edit-board', $regionalAssociation) }}">
+                    <x-bladewind::button>
+                        Opdater Bestyrelse
+                    </x-bladewind::button>
+                </x-mush.link>
+            @endif
         </x-action-container>
 
         <x-mush.grid cols="2">

@@ -60,6 +60,11 @@ class RegionalAssociation extends Model
         return $this->members()->wherePivot('role', AssociationRole::VICE_CHAIR);
     }
 
+    public function accountant(): BelongsToMany
+    {
+        return $this->members()->wherePivot('role', AssociationRole::ACCOUNTANT);
+    }
+
     public function currentOutstanding(): float
     {
         return $this->invoices()

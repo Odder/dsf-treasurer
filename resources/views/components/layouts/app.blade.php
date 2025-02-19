@@ -34,9 +34,11 @@
 <div class="min-h-screen bg-gray-100 dark:bg-dark700" style="background-color: #1f2937;">
     <div class="flex h-screen">
         <x-mush.layout.menu>
-{{--            <x-slot name="header">--}}
-{{--                <h2 class="font-semibold size-7 block">DSF KASSERER!</h2>--}}
-{{--            </x-slot>--}}
+            <x-slot name="header">
+                <div class=" w-full">
+                    <img src="{{ asset('images/dsf_logo.png') }}" class="block mx-auto" width="100px" height="100px"/>
+                </div>
+            </x-slot>
             @auth
                 @if(auth()->user()->isMemberOfAssociation())
                     <x-mush.layout.menu-group title="Afregning">
@@ -61,6 +63,12 @@
                     <x-mush.layout.menu-item title="Opret udlæg" link="/receipts/upload" match="receipts/upload"/>
                     <x-mush.layout.menu-item title="Mine Udlæg" link="/me/receipts" match="me/receipts"/>
                 </x-mush.layout.menu-group>
+
+                @if(auth()->user()->isDSFBoardMember())
+                    <x-mush.layout.menu-group title="Admin">
+                        <x-mush.layout.menu-item title="Roller" link="/people" match="people*"/>
+                    </x-mush.layout.menu-group>
+                @endif
             @else
                 <x-mush.layout.menu-group title="Bruger">
                     <x-mush.layout.menu-item title="Log ind" link="/login" match="login"/>

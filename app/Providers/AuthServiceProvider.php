@@ -3,17 +3,22 @@
 namespace App\Providers;
 
 use App\Models\Competition;
+use App\Models\ContactInfo;
 use App\Models\Invoice;
+use App\Models\User;
 use App\Policies\CompetitionPolicy;
+use App\Policies\ContactInfoPolicy;
 use App\Policies\InvoicePolicy;
 use App\Socialite\Wca\Provider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
         Invoice::class => InvoicePolicy::class,
         Competition::class => CompetitionPolicy::class,
+        ContactInfo::class => ContactInfoPolicy::class,
     ];
     /**
      * Register any authentication / authorization services.
@@ -23,6 +28,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootWcaSocialite();
+
+        Gate::define('managePeople', function (User $user) {
+            return $user->isDSFBoardMember();
+        });
     }
 
     public function bootWcaSocialite()
