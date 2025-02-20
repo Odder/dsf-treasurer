@@ -33,52 +33,14 @@
 <body class="font-sans antialiased dark:bg-dark700">
 <div class="min-h-screen bg-gray-100 dark:bg-dark700" style="background-color: #1f2937;">
     <div class="flex h-screen">
-        <x-mush.layout.menu>
+
+        <livewire:layout.menu>
             <x-slot name="header">
                 <div class=" w-full">
                     <img src="{{ asset('images/dsf_logo.png') }}" class="block mx-auto" width="100px" height="100px"/>
                 </div>
             </x-slot>
-            @auth
-                <x-mush.layout.menu-item title="Dashboard" link="/dashboard" match="dashboard"/>
-                @if(auth()->user()->isMemberOfAssociation())
-                    <x-mush.layout.menu-group title="Afregning">
-                        <x-mush.layout.menu-item title="Fakturaer" link="/invoices" match="invoice"/>
-                    </x-mush.layout.menu-group>
-                @endif
-                <x-mush.layout.menu-group title="Konkurrencer">
-                    <x-mush.layout.menu-item title="Konkurrencer" link="/competitions" match="competitions*"/>
-                </x-mush.layout.menu-group>
-                <x-mush.layout.menu-group title="Foreninger">
-                    <x-mush.layout.menu-item title="Regionale foreninger" link="/regional-associations"
-                                             match="regional-associations"/>
-                    @if($contact = auth()->user()->contact)
-                        @foreach($contact->associations as $association)
-                            <x-mush.layout.menu-item :title="$association->name"
-                                                     link="/regional-associations/{{ $association->id }}"
-                                                     match="regional-associations/{{ $association->id }}"/>
-                        @endforeach
-                    @endif
-                </x-mush.layout.menu-group>
-                <x-mush.layout.menu-group title="Udlæg">
-                    <x-mush.layout.menu-item title="Opret udlæg" link="/receipts/upload" match="receipts/upload"/>
-                    <x-mush.layout.menu-item title="Mine Udlæg" link="/me/receipts" match="me/receipts"/>
-                    @if(auth()->user()->isDSFBoardMember())
-                        <x-mush.layout.menu-item title="Administrer Udlæg" link="/manage/receipts" match="manage/receipts"/>
-                    @endif
-                </x-mush.layout.menu-group>
-
-                @if(auth()->user()->isDSFBoardMember())
-                    <x-mush.layout.menu-group title="Admin">
-                        <x-mush.layout.menu-item title="Roller" link="/people" match="people*"/>
-                    </x-mush.layout.menu-group>
-                @endif
-            @else
-                <x-mush.layout.menu-group title="Bruger">
-                    <x-mush.layout.menu-item title="Log ind" link="/login" match="login"/>
-                </x-mush.layout.menu-group>
-            @endif
-        </x-mush.layout.menu>
+        </livewire:layout.menu>
 
         <!-- Page Content Wrapper -->
         <div class="flex-1 flex flex-col md:pl-64">
