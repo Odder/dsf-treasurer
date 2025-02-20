@@ -1,17 +1,16 @@
 <aside
     class="fixed top-0 hidden md:flex md:w-64 bg-gray-800 text-white  dark:text-gray-300 py-6 px-3 flex-shrink-0 flex flex-col h-screen">
-    <!-- Added fixed and top-0 -->
     <nav>
-        @if(isset($header))
-            <div class="mb-6 p4">
-                {{ $header }}
-            </div>
-        @endif
+        <div class="w-full mb-4">
+            <img src="{{ asset('images/dsf_logo.png') }}" class="block mx-auto" width="100px" height="100px"/>
+        </div>
 
         @auth
+            <x-mush.layout.menu-item title="Dashboard" link="/dashboard" match="dashboard"/>
+
             @if($user?->isMemberOfAssociation())
                 <x-mush.layout.menu-group title="Afregning">
-                    <x-mush.layout.menu-item title="Fakturaer" link="/invoices" match="invoice"/>
+                    <x-mush.layout.menu-item title="Fakturaer" link="/invoices" match="invoices"/>
                 </x-mush.layout.menu-group>
             @endif
             <x-mush.layout.menu-group title="Konkurrencer">

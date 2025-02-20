@@ -34,13 +34,7 @@
 <div class="min-h-screen bg-gray-100 dark:bg-dark700" style="background-color: #1f2937;">
     <div class="flex h-screen">
 
-        <livewire:layout.menu>
-            <x-slot name="header">
-                <div class=" w-full">
-                    <img src="{{ asset('images/dsf_logo.png') }}" class="block mx-auto" width="100px" height="100px"/>
-                </div>
-            </x-slot>
-        </livewire:layout.menu>
+        <livewire:layout.menu />
 
         <!-- Page Content Wrapper -->
         <div class="flex-1 flex flex-col md:pl-64">
