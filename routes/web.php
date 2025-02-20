@@ -24,6 +24,8 @@ Route::get('/', function () {
 Route::get('/login', LoginScreen::class)->name('login');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('dashboard');
+
     Route::get('/invoices', InvoiceTable::class)->name('invoices.index');
     Route::get('/invoices/{invoice}', InvoiceDetails::class)->name('invoices.show');
     Route::patch('/invoices/{invoice}/markAsPaid', [InvoiceController::class, 'markAsPaid'])->name('invoices.markAsPaid');

@@ -49,6 +49,6 @@ class WcaAuthController extends Controller
 
         Auth::login($newUser);
 
-        return redirect('/invoices');
+        return redirect('/dashboard');
     }
 }

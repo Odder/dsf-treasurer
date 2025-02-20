@@ -40,6 +40,7 @@
                 </div>
             </x-slot>
             @auth
+                <x-mush.layout.menu-item title="Dashboard" link="/dashboard" match="dashboard"/>
                 @if(auth()->user()->isMemberOfAssociation())
                     <x-mush.layout.menu-group title="Afregning">
                         <x-mush.layout.menu-item title="Fakturaer" link="/invoices" match="invoice"/>
