@@ -5,10 +5,12 @@ namespace App\Providers;
 use App\Models\Competition;
 use App\Models\ContactInfo;
 use App\Models\Invoice;
+use App\Models\Receipt;
 use App\Models\User;
 use App\Policies\CompetitionPolicy;
 use App\Policies\ContactInfoPolicy;
 use App\Policies\InvoicePolicy;
+use App\Policies\ReceiptPolicy;
 use App\Socialite\Wca\Provider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -19,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         Invoice::class => InvoicePolicy::class,
         Competition::class => CompetitionPolicy::class,
         ContactInfo::class => ContactInfoPolicy::class,
+        Receipt::class => ReceiptPolicy::class,
     ];
     /**
      * Register any authentication / authorization services.

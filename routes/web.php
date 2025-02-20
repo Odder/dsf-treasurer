@@ -9,6 +9,7 @@ use App\Livewire\ContactInfoTable;
 use App\Livewire\InvoiceDetails;
 use App\Livewire\InvoiceTable;
 use App\Livewire\LoginScreen;
+use App\Livewire\ManageReceipts;
 use App\Livewire\MyReceipts;
 use App\Livewire\RegionalAssociationDetails;
 use App\Livewire\RegionalAssociationEditBoard;
@@ -36,9 +37,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/receipts/upload', UploadReceipt::class)->name('receipts.upload');
     Route::get('/me/receipts', MyReceipts::class)->name('receipts.mine');
+    Route::get('/manage/receipts', ManageReceipts::class)->name('receipts.manage');
 
     Route::middleware(['can:managePeople'])->group(function () {
-
         Route::get('/people', ContactInfoTable::class)->name('people.index');
         Route::get('/people/{contactInfo}', ContactInfoDetails::class)->name('people.show');
     });

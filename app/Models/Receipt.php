@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReceiptStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,10 @@ class Receipt extends Model
         'bank_account_number',
         'status',
         'amount',
+    ];
+
+    protected $casts = [
+        'status' => ReceiptStatus::class,
     ];
 
     public function user(): BelongsTo

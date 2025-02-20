@@ -62,6 +62,9 @@
                 <x-mush.layout.menu-group title="Udlæg">
                     <x-mush.layout.menu-item title="Opret udlæg" link="/receipts/upload" match="receipts/upload"/>
                     <x-mush.layout.menu-item title="Mine Udlæg" link="/me/receipts" match="me/receipts"/>
+                    @if(auth()->user()->isDSFBoardMember())
+                        <x-mush.layout.menu-item title="Administrer Udlæg" link="/manage/receipts" match="manage/receipts"/>
+                    @endif
                 </x-mush.layout.menu-group>
 
                 @if(auth()->user()->isDSFBoardMember())

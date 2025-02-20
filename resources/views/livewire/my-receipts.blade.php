@@ -1,15 +1,17 @@
 @php
+    use App\Enums\ReceiptStatus;
+
     $statusLevel = [
-        'reported' => 'draft',
-        'accepted' => 'info',
-        'rejected' => 'danger',
-        'settled' => 'success',
+        ReceiptStatus::REPORTED->value => 'draft',
+        ReceiptStatus::ACCEPTED->value => 'info',
+        ReceiptStatus::REJECTED->value => 'danger',
+        ReceiptStatus::SETTLED->value => 'success',
     ];
     $statusText = [
-        'reported' => 'Indsendt',
-        'accepted' => 'Godkendt',
-        'rejected' => 'Afvist',
-        'settled' => 'Afregnet',
+        ReceiptStatus::REPORTED->value => 'Indsendt',
+        ReceiptStatus::ACCEPTED->value => 'Godkendt',
+        ReceiptStatus::REJECTED->value => 'Afvist',
+        ReceiptStatus::SETTLED->value => 'Afregnet',
     ];
 @endphp
 
@@ -57,10 +59,10 @@
                             @endif
                         </x-mush.comp.table-td>
                         <x-mush.comp.table-td>
-                            <x-mush.comp.badge :level="$statusLevel[$receipt->status]" :text="$statusText[$receipt->status]" />
+                            <x-mush.comp.badge :level="$statusLevel[$receipt->status->value]" :text="$statusText[$receipt->status->value]" />
                         </x-mush.comp.table-td>
                         <x-mush.comp.table-td>
-                            @if($receipt->status == 'reported' || $receipt->status == 'accepted')
+                            @if($receipt->status == ReceiptStatus::REPORTED || $receipt->status == ReceiptStatus::ACCEPTED)
                                 <x-bladewind::button wire:click="updateStatus('{{$receipt->id}}', 'rejected')" size="tiny" color="red">Annulér</x-bladewind::button>
                             @endif
                         </x-mush.comp.table-td>

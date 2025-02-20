@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\ReceiptStatus;
 use App\Models\Receipt;
 use Livewire\Component;
 
@@ -20,7 +21,7 @@ class MyReceipts extends Component
     }
 
     public function updateStatus(Receipt $receipt, $status) {
-        $receipt->update(['status' => $status]);
+        $receipt->update(['status' => ReceiptStatus::from($status)]);
         $this->mount();
     }
 }
