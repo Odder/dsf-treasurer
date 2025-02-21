@@ -26,6 +26,15 @@
                     :items="$statusFilterOptions"
                 />
             </div>
+
+            <div>
+                <x-mush.form.select
+                    id="associationFilter"
+                    label="Forening"
+                    default="Alle"
+                    :items="$associations->pluck('name', 'id')"
+                />
+            </div>
         </div>
 
         <x-mush.comp.table>

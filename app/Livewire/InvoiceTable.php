@@ -17,6 +17,7 @@ class InvoiceTable extends Component
     protected $paginationTheme = 'tailwind';
 
     public ?string $statusFilter = null;
+    public ?string $associationFilter = null;
 
     public int $perPage = 10;
 
@@ -30,6 +31,10 @@ class InvoiceTable extends Component
 
         if ($this->statusFilter) {
             $query->where('status', $this->statusFilter);
+        }
+
+        if ($this->associationFilter) {
+            $query->where('association_id', $this->associationFilter);
         }
 
         $invoices = $query->paginate($this->perPage);
