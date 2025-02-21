@@ -28,6 +28,7 @@ class Invoice extends Model
     ];
     protected $casts = [
         'sent_at' => 'datetime',
+        'due_at' => 'datetime',
     ];
 
     public function recipient(): BelongsTo
@@ -67,6 +68,21 @@ class Invoice extends Model
         return $query->whereHas('competition', function ($q) use ($year) {
             $q->whereYear('end_date', $year);
         });
+    }
+
+    public function scopePastDueAt($query)
+    {
+        return $query->whereNotNull('due_at')->where('due_at', '<', now());
+    }
+
+    public function scopeOverdue($query)
+    {
+        return $query->where('status', 'overdue');
+    }
+
+    public function scopeUnpaid($query)
+    {
+        return $query->where('status', 'unpaid');
     }
 
     public function scopeForCurrentUser(Builder $query)
