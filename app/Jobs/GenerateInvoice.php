@@ -6,7 +6,7 @@ use App\Models\Competition;
 use App\Models\InvoiceLine;
 use App\Models\RegionalAssociation;
 use App\Services\Wca\Competitions;
-use App\Services\Wca\Wcif;
+use App\Services\Wca\Facades\Wcif;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -76,6 +76,7 @@ class GenerateInvoice implements ShouldQueue
                 DiscordAlert::message("ℹ️ Invoice already exists for: **{$competitionName}**. Skipping.");
             }
         } catch (\Exception $e) {
+            dd($e->getMessage());
             Log::error("Job GenerateInvoice failed for competition {$this->competition->name}: " . $e->getMessage() . "\n" . $e->getTraceAsString());
             DiscordAlert::message("🔥 Job failed for: **{$competitionName}**: " . $e->getMessage());
             throw $e; // Important: Re-throw the exception to mark the job as failed in the queue

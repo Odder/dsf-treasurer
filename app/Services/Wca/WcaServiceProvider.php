@@ -9,7 +9,9 @@ class WcaServiceProvider extends ServiceProvider
 {
     public function register()
     {
-
+        $this->app->bind('wcif-service', function ($app) {
+            return new WcifService();
+        });
     }
 
     public function boot()

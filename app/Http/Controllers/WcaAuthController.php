@@ -25,7 +25,7 @@ class WcaAuthController extends Controller
 
         if ($user) {
             Auth::login($user);
-            return redirect('/invoices');
+            return redirect('/dashboard');
         }
 
         // Check if a user with this email already exists
@@ -36,7 +36,7 @@ class WcaAuthController extends Controller
             $user->wca_id = $wcaUser->wca_id;
             $user->save();
             Auth::login($user);
-            return redirect('/invoices');
+            return redirect('/dashboard');
         }
 
         // Create a new user

@@ -18,8 +18,7 @@ class RegionalAssociationFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'address' => $this->faker->address(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'wcif_identifier' => $this->faker->word(),
         ];
     }
 }
