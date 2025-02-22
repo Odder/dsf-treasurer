@@ -4,19 +4,16 @@ namespace Tests\Unit\Jobs;
 
 use App\Jobs\GenerateInvoice;
 use App\Models\Competition;
-use App\Models\Invoice;
 use App\Models\RegionalAssociation;
 use App\Services\Wca\Wcif;
 use App\Services\Wca\Facades\Wcif as WcifFacade;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Spatie\DiscordAlerts\Facades\DiscordAlert;
 use Tests\TestCase;
 
 class GenerateInvoiceTest extends TestCase
 {
-    use RefreshDatabase, MockeryPHPUnitIntegration;
+    use RefreshDatabase;
 
     /** @test */
     public function it_correctly_calculates_non_paying_participants_based_on_wca_id_and_role(): void

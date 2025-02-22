@@ -22,7 +22,6 @@ class InvoiceFactory extends Factory
             'non_paying_participants' => $this->faker->numberBetween(0, 100),
             'status' => $this->faker->randomElement(['paid', 'unpaid']),
             'recipient_id' => $this->faker->numberBetween(1, 10),
-            'sent_at' => $this->faker->dateTime,
         ];
     }
 }
