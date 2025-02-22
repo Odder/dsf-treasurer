@@ -5,10 +5,18 @@
 
     <x-mush.layout.container>
         <div></div>
-        <x-mush.comp.card>
+        <x-mush.comp.card title="Hej! 👋">
             <div class="p-4">
                 <p class="mb-4">
-                    For at se fakturaer relateret til Dansk Speedcubing Forening (DSF) skal du være logget ind.
+                    Log ind for at få adgang til DSF's kontigent system. Her kan du:
+                </p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li>Se og administrere fakturaer for din forening.</li>
+                    <li>Oprette og følge dine DSF udlæg.</li>
+                    <li>Se kommende konkurrencer.</li>
+                </ul>
+                <p class="mb-4">
+                    Du logger ind med din WCA profil.
                 </p>
                 <a href="/auth/wca/redirect">
                     <x-bladewind::button>

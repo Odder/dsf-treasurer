@@ -10,6 +10,7 @@ use App\Livewire\InvoiceDetails;
 use App\Livewire\InvoiceTable;
 use App\Livewire\LoginScreen;
 use App\Livewire\ManageReceipts;
+use App\Livewire\MembershipFeeLookup;
 use App\Livewire\MyReceipts;
 use App\Livewire\RegionalAssociationDetails;
 use App\Livewire\RegionalAssociationEditBoard;
@@ -41,9 +42,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/me/receipts', MyReceipts::class)->name('receipts.mine');
     Route::get('/manage/receipts', ManageReceipts::class)->name('receipts.manage');
 
+
     Route::middleware(['can:managePeople'])->group(function () {
         Route::get('/people', ContactInfoTable::class)->name('people.index');
         Route::get('/people/{contactInfo}', ContactInfoDetails::class)->name('people.show');
+
+        Route::get('/membership-fees/search', MembershipFeeLookup::class)->name('membership-fees.search');
     });
 
     Route::get('/logout', function () {

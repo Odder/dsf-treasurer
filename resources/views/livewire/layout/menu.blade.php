@@ -38,6 +38,7 @@
             @if($user?->isDSFBoardMember())
                 <x-mush.layout.menu-group title="Admin">
                     <x-mush.layout.menu-item title="Roller" link="/people" match="people*"/>
+                    <x-mush.layout.menu-item title="Søg Kontingent" link="/membership-fees/search" match="membership-fees/search"/>
                 </x-mush.layout.menu-group>
             @endif
         @else
