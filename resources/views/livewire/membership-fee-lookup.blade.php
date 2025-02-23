@@ -13,12 +13,9 @@
                         id="wcaId"
                         label="WCA ID"
                         placeholder="Indtast WCA ID"
-                        wire:model.live="wcaId"
-                        wire:keydown.enter="search"
+                        change="naiveSearch"
                     />
                 </div>
-
-                <x-bladewind::button wire:click="search">Søg</x-bladewind::button>
             </div>
         </x-mush.comp.card>
 

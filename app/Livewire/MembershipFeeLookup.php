@@ -27,6 +27,14 @@ class MembershipFeeLookup extends Component
         $this->calculateTotalMembershipFeePast14Months();
     }
 
+    public function naiveSearch(): void
+    {
+        if (preg_match('/^\d{4}[A-Za-z]{4}\d{2}$/', $this->wcaId)) {
+            $this->wcaId = strtoupper($this->wcaId);
+            $this->search();
+        }
+    }
+
     private function calculateMembershipStatus(): void
     {
         $fourteenMonthsAgo = now()->subMonths(14);
