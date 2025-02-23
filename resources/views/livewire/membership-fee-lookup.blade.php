@@ -58,11 +58,15 @@
                         @foreach ($payments as $payment)
                             <x-mush.comp.table-tr wire:key="{{ $payment->id }}">
                                 <x-mush.comp.table-td>
-                                    <x-mush.link link="/competitions/{{ $payment->competition->id }}">
-                                        {{ $payment->competition->name }}
-                                    </x-mush.link>
+                                    @if($payment->competition)
+                                        <x-mush.link link="/competitions/{{ $payment->competition->id }}">
+                                            {{ $payment->competition->name }}
+                                        </x-mush.link>
+                                    @else
+                                        Manuel betaling
+                                    @endif
                                 </x-mush.comp.table-td>
-                                <x-mush.comp.table-td class="text-right">{{ $payment->amount ? number_format($payment->amount, 2) : '-' }}</x-mush.comp.table-td>
+                                <x-mush.comp.table-td class="text-right">{{ $payment->amount > 1 ? number_format($payment->amount, 2) : '-' }}</x-mush.comp.table-td>
                                 <x-mush.comp.table-td>{{ $payment->waived ? 'Ja' : 'Nej' }}</x-mush.comp.table-td>
                                 <x-mush.comp.table-td>{{ $payment->payment_date->format('d/m/Y') }}</x-mush.comp.table-td>
                             </x-mush.comp.table-tr>

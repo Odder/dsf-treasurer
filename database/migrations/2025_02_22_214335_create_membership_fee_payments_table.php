@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('membership_fee_payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('wca_id')->nullable()->index();
-            $table->foreignUuid('competition_id')->constrained('competitions');
+            $table->foreignUuid('competition_id')->nullable()->constrained('competitions');
             $table->decimal('amount', 10, 2)->default(0.00);
             $table->boolean('waived')->default(false);
             $table->date('payment_date');
