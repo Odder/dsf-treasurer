@@ -34,9 +34,16 @@ class MembershipFeeStatistics extends Command
         })
             ->get();
 
+        $totalPaid = 0;
+        $totalWaived = 0;
+
         $personStats = [];
 
         foreach ($competitions as $competition) {
+
+            if (in_array($competition->wca_id, ['KalaallitNunaat2024', 'Ilulissat2024'])) {
+                continue;
+            }
             $wcif = $competition->wcif;
 
             if (!$wcif || !collect($wcif->raw)->get('persons')) {
@@ -44,10 +51,15 @@ class MembershipFeeStatistics extends Command
                 continue;
             }
 
+            $skips = ['Dansk Speedcubing Forening', 'Speedcubing Aarhus'];
+
             $participants = $wcif->getCompetitors();
             $nonPayingParticipants = $participants->filter(fn($c) => $c['roles'] && (in_array('organizer', $c['roles']) || in_array('delegate', $c['roles'])));
 
             foreach ($participants as $participant) {
+                if (in_array($participant['name'], $skips)) {
+                    continue;
+                }
                 $wcaId = $participant['name'] ?? 'Unknown';
                 if (!isset($personStats[$wcaId])) {
                     $personStats[$wcaId] = [
@@ -60,12 +72,19 @@ class MembershipFeeStatistics extends Command
                 }
                 $personStats[$wcaId]['total_paid']++;
                 $personStats[$wcaId]['membership_fee'] += 25;
+                $totalPaid += 25;
             }
 
             foreach ($nonPayingParticipants as $nonPayingParticipant) {
+                if (in_array($nonPayingParticipant['name'], $skips)) {
+                    continue;
+                }
                 $wcaId = $nonPayingParticipant['name'] ?? 'Unknown';
                 $personStats[$wcaId]['total_skipped']++;
                 $personStats[$wcaId]['membership_fee'] -= 25;
+                $totalPaid -= 25;
+                $totalWaived += 25;
+                $this->info($nonPayingParticipant['name'] ?? 'Unknown');
             }
         }
 
@@ -130,6 +149,11 @@ class MembershipFeeStatistics extends Command
         }
 
         $this->table($headers, $data);
+
+        $this->info($totalPaid);
+        $this->info($totalWaived);
+        $this->info($totalWaived / ($totalPaid + $totalWaived));
+        $this->info(($totalPaid / ($totalPaid + $totalWaived)) * 25);
 
         return Command::SUCCESS;
     }
