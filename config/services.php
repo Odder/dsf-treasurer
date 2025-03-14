@@ -39,6 +39,8 @@ return [
         'client_id' => env('WCA_CLIENT_ID'),
         'client_secret' => env('WCA_CLIENT_SECRET'),
         'redirect' => env('WCA_REDIRECT_URI'),
+        'service_user_username' => env('WCA_SERVICE_USERNAME'),
+        'service_user_password' => env('WCA_SERVICE_PASSWORD'),
     ],
 
 ];

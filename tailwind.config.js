@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    darkMode: 'class',
     content: [
         './resources/**/*.blade.php',
         './resources/**/*.js',
@@ -7,12 +8,12 @@ module.exports = {
     ],
     theme: {
         extend: {
-            colors: {
-                primary: colors.blue,
-                secondary: colors.slate,
-                dark: colors.gray,
-                green: colors.emerald,
-            },
+            // colors: {
+            //     primary: colors.blue,
+            //     secondary: colors.slate,
+            //     dark: colors.gray,
+            //     green: colors.emerald,
+            // },
         },
     },
     plugins: [],

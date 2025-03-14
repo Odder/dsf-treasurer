@@ -8,12 +8,12 @@
 
     <title>{{ config('app.name', 'DSF Kontigent') }}</title>
     @livewireStyles
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet"/>
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>

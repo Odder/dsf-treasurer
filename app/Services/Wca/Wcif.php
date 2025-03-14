@@ -22,9 +22,10 @@ class Wcif
             if ($public)  {
                 $response = Http::wca()->get("competitions/{$id}/wcif/public");
             } else {
+                $accessToken = (new WcaTokenService())->getAccessToken();
                 $response = Http::wca()
                     ->withHeaders([
-                        'Authorization' => 'bearer '.config('app.wca_api_key')
+                        'Authorization' => 'bearer '.$accessToken
                     ])->get("competitions/{$id}/wcif");
             }
 
@@ -128,9 +129,10 @@ class Wcif
         }
 
         try {
+            $accessToken = (new WcaTokenService())->getAccessToken();
             $response = Http::wca()
                 ->withHeaders([
-                    'Authorization' => 'bearer '.config('app.wca_api_key'),
+                    'Authorization' => 'bearer '.$accessToken,
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                 ])
@@ -143,7 +145,7 @@ class Wcif
                     'url' => "competitions/{$this->raw['id']}/wcif",
                     'method' => 'PATCH',
                     'headers' => [
-                        'Authorization' => 'bearer '.config('app.wca_api_key'),
+                        'Authorization' => 'bearer '.$accessToken,
                         'Content-Type' => 'application/json',
                         'Accept' => 'application/json',
                     ],

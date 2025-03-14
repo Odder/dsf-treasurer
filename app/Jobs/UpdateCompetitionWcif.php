@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Competition;
 use App\Models\RegionalAssociation;
-use App\Services\Wca\Wcif;
+use App\Services\Wca\Facades\Wcif;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;

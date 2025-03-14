@@ -37,7 +37,7 @@ class CompetitionDetails extends Component
 
     public function refetchWcif(): void
     {
-        UpdateCompetitionWcif::dispatchSync($this->competition, public: true);
+        UpdateCompetitionWcif::dispatchSync($this->competition, public: false);
         session()->flash('message', 'WCIF data successfully updated.');
         $this->competition->refresh();
         $this->loadWcifData();
