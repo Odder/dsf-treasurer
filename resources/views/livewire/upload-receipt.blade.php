@@ -32,7 +32,7 @@
                                 <x-mush.form.input
                                     id="amount"
                                     label="Beløb"
-                                    placeholder="13.00"
+                                    placeholder="13,00"
                                 />
                                 @error('amount') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>

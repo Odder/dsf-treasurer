@@ -17,8 +17,8 @@ class UploadReceipt extends Component
 
     #[Validate('required')]
     public $receiptFile;
-    #[Validate('numeric|min:0')] // Validate that the amount is numeric and non-negative
-    public ?float $amount = null;
+    #[Validate('required')] // Validate that the amount is numeric and non-negative
+    public ?string $amount = null;
     public string $description;
     public ?string $bank_account_reg = null;
     public ?string $bank_account_number = null;
@@ -26,6 +26,7 @@ class UploadReceipt extends Component
     public ?string $competition_id = null;
     public $associations;
     public $competitions;
+
     public function mount()
     {
         $this->associations = RegionalAssociation::all();
@@ -36,6 +37,11 @@ class UploadReceipt extends Component
     {
         $this->validate();
 
+        $this->amount = (float) preg_replace('/,/', '.', $this->amount);
+        if ($this->amount < 1) {
+            throw new \Exception('Amount should be greater than 0');
+        }
+
         $path = Storage::disk('s3')->putFile('/receipts', $this->receiptFile);
 
         Receipt::create([
@@ -44,7 +50,7 @@ class UploadReceipt extends Component
             'competition_id' => $this->competition_id,
             'image_path' => $path,
             'description' => $this->description,
-            'amount' => $this->amount,
+            'amount' => (float) preg_replace('/,/', '.', $this->amount),
             'bank_account_reg' => $this->bank_account_reg,
             'bank_account_number' => $this->bank_account_number,
         ]);
