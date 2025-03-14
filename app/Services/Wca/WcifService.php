@@ -15,9 +15,10 @@ class WcifService
             if ($public)  {
                 $response = Http::wca()->get("competitions/{$id}/wcif/public");
             } else {
+                $accessToken = (new WcaTokenService())->getAccessToken();
                 $response = Http::wca()
                     ->withHeaders([
-                        'Authorization' => 'bearer '.config('app.wca_api_key')
+                        'Authorization' => 'bearer '.$accessToken
                     ])->get("competitions/{$id}/wcif");
             }
 
