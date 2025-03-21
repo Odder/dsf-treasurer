@@ -50,7 +50,7 @@
 
         <div class="mb-8">
             <!-- Traditional Table for Larger Screens -->
-            <div class="hidden sm:block">
+            <div class="sm:block">
                 <table class="min-w-full bg-white border-collapse">
                     <thead>
                     <tr class="bg-indigo-500 text-white">
