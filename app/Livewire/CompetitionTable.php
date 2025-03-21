@@ -13,7 +13,7 @@ class CompetitionTable extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public int $perPage = 10;
+    public int $perPage = 20;
 
     public function render()
     {

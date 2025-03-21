@@ -19,7 +19,7 @@ class InvoiceTable extends Component
     public ?string $statusFilter = null;
     public ?string $associationFilter = null;
 
-    public int $perPage = 10;
+    public int $perPage = 15;
 
     public function render()
     {
@@ -37,7 +37,7 @@ class InvoiceTable extends Component
             $query->where('association_id', $this->associationFilter);
         }
 
-        $invoices = $query->paginate($this->perPage);
+        $invoices = $query->orderBy('id', 'desc')->paginate($this->perPage);
 
         return view('livewire.invoice-table', [
             'invoices' => $invoices,
