@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Invoice;
+use App\Models\Receipt;
 use App\Observers\InvoiceObserver;
+use App\Observers\ReceiptObserver;
 use App\Services\Wca\Competitions;
 use App\Services\Wca\WcaServiceProvider;
 use Illuminate\Support\Carbon;
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Invoice::observe(InvoiceObserver::class);
+        Receipt::observe(ReceiptObserver::class);
 
         $this->app->register(WcaServiceProvider::class);
 

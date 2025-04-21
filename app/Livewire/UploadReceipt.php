@@ -30,7 +30,7 @@ class UploadReceipt extends Component
     public function mount()
     {
         $this->associations = RegionalAssociation::all();
-        $this->competitions = Competition::all();
+        $this->competitions = Competition::orderBy('end_date', 'desc')->get();
     }
 
     public function save()

@@ -29,8 +29,7 @@
                     <x-mush.comp.table-th>Kvittering</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Beskrivelse</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Forening</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Person</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Bank Info</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
                 </x-slot:header>
@@ -46,22 +45,9 @@
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ number_format($receipt->amount, 2, ',', '.') }}</x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ $receipt->description }}</x-mush.comp.table-td>
+                            <x-mush.comp.table-td>{{ $receipt->user->name }}</x-mush.comp.table-td>
                             <x-mush.comp.table-td>
-                                @if ($receipt->association)
-                                    <x-mush.link link="/regional-associations/{{ $receipt->association->id }}">
-                                        {{ $receipt->association->name }}
-                                    </x-mush.link>
-                                @endif
-                            </x-mush.comp.table-td>
-                            <x-mush.comp.table-td>
-                                @if ($receipt->competition)
-                                    <x-mush.link link="/competitions/{{ $receipt->competition->id }}">
-                                        {{ $receipt->competition->name }}
-                                    </x-mush.link>
-                                @endif
-                            </x-mush.comp.table-td>
-                            <x-mush.comp.table-td>
-                                Reg: {{ $receipt->bank_account_reg }}
+                                Reg: {{ $receipt->bank_account_reg }}<br>
                                 Konto: {{ $receipt->bank_account_number }}
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>
@@ -101,8 +87,7 @@
                     <x-mush.comp.table-th>Kvittering</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Beskrivelse</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Forening</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Person</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Bank Info</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Actions</x-mush.comp.table-th>
                 </x-slot:header>
@@ -118,22 +103,9 @@
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ number_format($receipt->amount, 2, ',', '.') }}</x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ $receipt->description }}</x-mush.comp.table-td>
+                            <x-mush.comp.table-td>{{ $receipt->user->name }}</x-mush.comp.table-td>
                             <x-mush.comp.table-td>
-                                @if ($receipt->association)
-                                    <x-mush.link link="/regional-associations/{{ $receipt->association->id }}">
-                                        {{ $receipt->association->name }}
-                                    </x-mush.link>
-                                @endif
-                            </x-mush.comp.table-td>
-                            <x-mush.comp.table-td>
-                                @if ($receipt->competition)
-                                    <x-mush.link link="/competitions/{{ $receipt->competition->id }}">
-                                        {{ $receipt->competition->name }}
-                                    </x-mush.link>
-                                @endif
-                            </x-mush.comp.table-td>
-                            <x-mush.comp.table-td>
-                                Reg: {{ $receipt->bank_account_reg }}
+                                Reg: {{ $receipt->bank_account_reg }}<br>
                                 Konto: {{ $receipt->bank_account_number }}
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>
@@ -173,8 +145,7 @@
                     <x-mush.comp.table-th>Kvittering</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Beløb</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Beskrivelse</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Forening</x-mush.comp.table-th>
-                    <x-mush.comp.table-th>Konkurrence</x-mush.comp.table-th>
+                    <x-mush.comp.table-th>Person</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Bank Info</x-mush.comp.table-th>
                     <x-mush.comp.table-th>Status</x-mush.comp.table-th>
                 </x-slot:header>
@@ -190,22 +161,9 @@
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ number_format($receipt->amount, 2, ',', '.') }}</x-mush.comp.table-td>
                             <x-mush.comp.table-td>{{ $receipt->description }}</x-mush.comp.table-td>
+                            <x-mush.comp.table-td>{{ $receipt->user->name }}</x-mush.comp.table-td>
                             <x-mush.comp.table-td>
-                                @if ($receipt->association)
-                                    <x-mush.link link="/regional-associations/{{ $receipt->association->id }}">
-                                        {{ $receipt->association->name }}
-                                    </x-mush.link>
-                                @endif
-                            </x-mush.comp.table-td>
-                            <x-mush.comp.table-td>
-                                @if ($receipt->competition)
-                                    <x-mush.link link="/competitions/{{ $receipt->competition->id }}">
-                                        {{ $receipt->competition->name }}
-                                    </x-mush.link>
-                                @endif
-                            </x-mush.comp.table-td>
-                            <x-mush.comp.table-td>
-                                Reg: {{ $receipt->bank_account_reg }}
+                                Reg: {{ $receipt->bank_account_reg }}<br>
                                 Konto: {{ $receipt->bank_account_number }}
                             </x-mush.comp.table-td>
                             <x-mush.comp.table-td>

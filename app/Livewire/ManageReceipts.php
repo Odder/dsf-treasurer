@@ -33,9 +33,9 @@ class ManageReceipts extends Component
 
     public function render()
     {
-        $receivedReceipts = Receipt::with(['association', 'competition'])->where('status', ReceiptStatus::REPORTED)->paginate($this->perPage, pageName: 'receivedReceiptsPage');
-        $acceptedReceipts = Receipt::with(['association', 'competition'])->where('status', ReceiptStatus::ACCEPTED)->paginate($this->perPage, pageName: 'acceptedReceiptsPage');
-        $closedReceipts = Receipt::with(['association', 'competition'])->whereIn('status', [ReceiptStatus::REJECTED, ReceiptStatus::SETTLED])->paginate($this->perPage, pageName: 'closedReceiptsPage');
+        $receivedReceipts = Receipt::with(['association', 'competition', 'user'])->where('status', ReceiptStatus::REPORTED)->paginate($this->perPage, pageName: 'receivedReceiptsPage');
+        $acceptedReceipts = Receipt::with(['association', 'competition', 'user'])->where('status', ReceiptStatus::ACCEPTED)->paginate($this->perPage, pageName: 'acceptedReceiptsPage');
+        $closedReceipts = Receipt::with(['association', 'competition', 'user'])->whereIn('status', [ReceiptStatus::REJECTED, ReceiptStatus::SETTLED])->paginate($this->perPage, pageName: 'closedReceiptsPage');
         return view('livewire.manage-receipts', [
             'receivedReceipts' => $receivedReceipts,
             'acceptedReceipts' => $acceptedReceipts,

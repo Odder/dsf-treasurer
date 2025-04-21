@@ -82,16 +82,18 @@
                             </div>
 
                             <div>
-                                <label for="competition_id" class="block text-gray-700 text-sm font-bold mb-2">Forening
+                                <label for="competition_id" class="block text-gray-700 text-sm font-bold mb-2">Konkurrence
                                     (valgfrit)</label>
                                 <select wire:model.live="competition_id" id="competition_id"
-                                        class="bw-input peer bank_account_number placeholder-transparent dark:placeholder-transparent medium">
-                                    <option value="" class="dark:bg-gray-800">-- Vælg forening --</option>
+                                        class="bw-input peer bank_account_number placeholder-transparent dark:placeholder-transparent medium text-black">
+                                    <option value="" class="dark:bg-gray-800">-- Vælg konkurrence --</option>
                                     @foreach($competitions as $competition)
-                                        <option value="{{ $competition->id }}">{{ $competition->name }}</option>
+                                        <option value="{{ $competition->id }}"
+                                                class="dark:bg-gray-800">{{ $competition->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('competition_id') <span class="dark:bg-gray-800">{{ $message }}</span> @enderror
+                                @error('competition_id') <span
+                                    class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
                             <div class="text-right col-span-2">
                                 <x-bladewind::button can_submit="true">
